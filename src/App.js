@@ -1,23 +1,23 @@
 import logo from './logo.svg';
-import './App.css';
-
+import { BrowserRouter, Routes,Route } from 'react-router-dom';
+import classes from  './App.module.scss';
+import Welcome from './components/Pages/Welcome/Welcome';
+import Game from './components/Pages/Game/Game';
+export const URLs={
+  welcome:'/',
+  game:"Game",
+  results:"Results"
+}
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.App}>
+      <BrowserRouter>
+        <Routes>
+          <Route path={URLs.welcome} element={<Welcome/>}></Route>
+          <Route path={URLs.game} element={<Game/>}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

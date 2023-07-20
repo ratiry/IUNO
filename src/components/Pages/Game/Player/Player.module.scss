@@ -1,0 +1,17 @@
+.Player{
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    overflow:scroll;
+    overflow-y:hidden;
+    margin:25px;
+    &::-webkit-scrollbar{
+        background:yellow;
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background:black;
+        border-radius: 10px;
+
+    }
+}
