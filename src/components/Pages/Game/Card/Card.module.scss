@@ -1,14 +1,14 @@
-button{
+.Card{
     width:50px;
     height:100px;
     background:none;
     border:none;
     transition:border 0.25s;
-    &:hover{
-        border: yellow 0.001px solid;
-    }
-    img{
-        height:100%;
-        height:100%;
+    cursor: not-allowed;
+    &.realPlayer{
+        cursor: pointer;
+        &:hover{
+            margin:1px;
+        }
     }
 }
