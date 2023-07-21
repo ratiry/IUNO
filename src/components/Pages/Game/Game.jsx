@@ -10,6 +10,7 @@ let Game=()=>{
     let quantityOfPlayers=Number(location.state.ammountOfPlayers);
     let [stackOfCards,setStackOfCards]=useState([]);
     let [cardsOfPlayers,setCardsOfPlayers] = useState([]);
+
     useEffect(()=>{    
        let [remainingStack,firstPlayersCards] =GenerateStack(CardsData,quantityOfPlayers);
        setCardsOfPlayers(firstPlayersCards);
@@ -19,13 +20,13 @@ let Game=()=>{
     return(
         <div className={classes.Game}> 
             <Dock cards={stackOfCards}/>
-            <Player id={2} quantityOfPlayers={quantityOfPlayers}/>
+            <Player cards={cardsOfPlayers[2]} id={2} quantityOfPlayers={quantityOfPlayers}/>
             <div></div>
-            <Player id={3} quantityOfPlayers={quantityOfPlayers}/>
+            <Player cards={cardsOfPlayers[1]} id={3} quantityOfPlayers={quantityOfPlayers}/>
             <div className={classes.PlayField}></div>
-            <Player id={4} quantityOfPlayers={quantityOfPlayers}/>
+            <Player cards={cardsOfPlayers[3]} id={4} quantityOfPlayers={quantityOfPlayers}/>
             <div></div>
-            <Player cards={stackOfCards} isRealPlayear={true} id={1} quantityOfPlayers={quantityOfPlayers}/>
+            <Player cards={cardsOfPlayers[0]} isRealPlayear={true} id={1} quantityOfPlayers={quantityOfPlayers}/>
             <div></div>
         </div>
     )
