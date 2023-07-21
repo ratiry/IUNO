@@ -2,21 +2,24 @@ import { useLocation } from "react-router-dom";
 import classes from './Game.module.scss';
 import Player from "./Player/Player";
 import { useEffect ,useState} from "react";
-import GenerateStack from "../../Helpers/GenerateStackFunction";
+import preparationToTheGame from "../../Helpers/preparationToTheGame";
 import CardsData from "../../Helpers/Cards";
 import Dock from "./Dock/Dock";
 import getRandomInt from "../../Helpers/Random";
+import PlayField from "./Playfield/PlayField";
 let Game=()=>{
     let location=useLocation();
     let quantityOfPlayers=Number(location.state.ammountOfPlayers);
     let [stackOfCards,setStackOfCards]=useState([]);
     let [cardsOfPlayers,setCardsOfPlayers] = useState([]);
-    let [numberOfCurrentPlayer,SetnumberOfCurrentPlayer] = useState(0);
+    let [numberOfCurrentPlayer,setNumberOfCurrentPlayer] = useState(0);
+    let [usedCards,setUsedCards] = useState([])
     useEffect(()=>{    
-       let [remainingStack,firstPlayersCards] =GenerateStack(CardsData,quantityOfPlayers);
+       let [remainingStack,firstPlayersCards,firstCardToStartTheGame] =preparationToTheGame(CardsData,quantityOfPlayers);
        setCardsOfPlayers(firstPlayersCards);
        setStackOfCards(remainingStack);
-       SetnumberOfCurrentPlayer(getRandomInt(quantityOfPlayers));
+       setNumberOfCurrentPlayer(getRandomInt(quantityOfPlayers));
+       setUsedCards([...usedCards,firstCardToStartTheGame]);
     },[])
 
     return(
@@ -25,7 +28,7 @@ let Game=()=>{
             <Player cards={cardsOfPlayers[1]} id={2} quantityOfPlayers={quantityOfPlayers}/>
             <div></div>
             <Player cards={cardsOfPlayers[2]} id={3} quantityOfPlayers={quantityOfPlayers}/>
-            <div className={classes.PlayField}></div>
+            <PlayField cards={usedCards}/>
             <Player cards={cardsOfPlayers[3]} id={4} quantityOfPlayers={quantityOfPlayers}/>
             <div></div>
             <Player cards={cardsOfPlayers[0]} isRealPlayear={true} id={1} quantityOfPlayers={quantityOfPlayers}/>

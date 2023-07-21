@@ -22,6 +22,11 @@ let destributionOfCards=(generatedStack,quantityOfPlayers)=>{
     }
     return [generatedStack_copy,playersCardsArray]
 }
+let pickFirstCardToStartTheGame=(generatedStack)=>{
+    let generatedStack_copy=[...generatedStack];
+    let card=generatedStack.pop();
+    return [card,generatedStack]
+}
 let GenerateStack=(CardsArray,quantityOfPlayers)=>{
     let generatedStack=[];
     for(let i=0;i<CardsArray.length;i++){
@@ -39,9 +44,16 @@ let GenerateStack=(CardsArray,quantityOfPlayers)=>{
             }
         }
     }
+
+    return generatedStack;
+}
+let preparationToTheGame=(CardsArray,quantityOfPlayers)=>{
+    let generatedStack=GenerateStack(CardsArray,quantityOfPlayers);
     generatedStack=shuffle(generatedStack);
-    let [remainingStack, playersCardsArray]= destributionOfCards(generatedStack,quantityOfPlayers)
-    return [remainingStack, playersCardsArray];
+    let [remainingStack, playersCardsArray]= destributionOfCards(generatedStack,quantityOfPlayers);
+    let [FirstCardToStartTheGame,remainingStack_2]=pickFirstCardToStartTheGame(remainingStack);
+    return [remainingStack_2, playersCardsArray,FirstCardToStartTheGame];
+
 }
 
-export default GenerateStack;
+export default preparationToTheGame;
