@@ -4,17 +4,21 @@ import Player from "./Player/Player";
 import { useEffect ,useState} from "react";
 import GenerateStack from "../../Helpers/GenerateStackFunction";
 import CardsData from "../../Helpers/Cards";
+import Dock from "./Dock/Dock";
 let Game=()=>{
     let location=useLocation();
     let quantityOfPlayers=Number(location.state.ammountOfPlayers);
-    let [stackOfCards,SetStackOfCards]=useState([]);
-    useEffect(()=>{
-        SetStackOfCards(GenerateStack(CardsData));
+    let [stackOfCards,setStackOfCards]=useState([]);
+    let [cardsOfPlayers,setCardsOfPlayers] = useState([]);
+    useEffect(()=>{    
+       let [remainingStack,firstPlayersCards] =GenerateStack(CardsData,quantityOfPlayers);
+       setCardsOfPlayers(firstPlayersCards);
+       setStackOfCards(remainingStack)
     },[])
 
     return(
         <div className={classes.Game}> 
-            <div className={classes.Dock}></div>
+            <Dock cards={stackOfCards}/>
             <Player id={2} quantityOfPlayers={quantityOfPlayers}/>
             <div></div>
             <Player id={3} quantityOfPlayers={quantityOfPlayers}/>

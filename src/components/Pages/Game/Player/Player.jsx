@@ -7,13 +7,13 @@ let Player=(props)=>{
             
             return(
             <div className={classes.Player}>
-                {props.cards.map((card)=><Card isRealPlayear={true} src={card.src} color={card.color} value={card.value} type={card.type}/>)}
+                {props.cards.map((card)=><Card position={"realPlayers"} src={card.src} color={card.color} value={card.value} type={card.type}/>)}
             </div>
             )
         }
         return(
             <div className={classes.Player}>
-                <Card src="https://unocardinfo.victorhomedia.com/graphics/uno_card-blue0.png"/>
+                {/* {props.cards.map((card)=><Card src={card.src} color={card.color} value={card.value} type={card.type}/>)} */}
             </div>
         )
     }else{
