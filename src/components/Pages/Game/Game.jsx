@@ -31,7 +31,7 @@ let Game=()=>{
                     console.log(pickedCard);
                     if(pickedCard !=false){
                         let cardsOfPlayers_copy=[...cardsOfPlayers];
-                        let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer].filter( Card=> Card.src !==pickedCard.src);
+                        let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer].filter( Card=> Card.src !==pickedCard.src);//bug - deletes doubles like 2 and 2 with the same src
                         cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
                         setCardsOfPlayers([...cardsOfPlayers_copy])
                         setUsedCards([...usedCards,pickedCard]);
