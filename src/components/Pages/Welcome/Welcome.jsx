@@ -3,6 +3,7 @@ import classes from "./Welcome.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { URLs } from "../../../App";
+import P from "../../Common/Typography/P/P";
 let Welcome=(props)=>{
     let navigate=useNavigate();
     let ComputerPlayers=[];
@@ -33,7 +34,7 @@ let Welcome=(props)=>{
             <form  onSubmit={handleSubmit(onSubmit) }>
 
                 <div className={classes.Item}>
-                    <p>How many players</p>
+                    <P>How many players</P>
                     <select  name="ammountOfPlayers" {...register('ammountOfPlayers')}>
                     <option >2</option>
                     <option >3</option>
