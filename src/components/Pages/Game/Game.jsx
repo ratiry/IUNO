@@ -7,13 +7,15 @@ import CardsData from "../../Helpers/Cards";
 import Dock from "./Dock/Dock";
 import getRandomInt from "../../Helpers/Random";
 import PlayField from "./Playfield/PlayField";
+import CardComputerPick from "../../Helpers/CardComputerPick";
 let Game=()=>{
     let location=useLocation();
     let quantityOfPlayers=Number(location.state.ammountOfPlayers);
     let [stackOfCards,setStackOfCards]=useState([]);
     let [cardsOfPlayers,setCardsOfPlayers] = useState([]);
     let [numberOfCurrentPlayer,setNumberOfCurrentPlayer] = useState(-1);
-    let [usedCards,setUsedCards] = useState([])
+    let [usedCards,setUsedCards] = useState([]);
+    window.cardsOfPlayers=cardsOfPlayers;
     useEffect(()=>{    
        let [remainingStack,firstPlayersCards,firstCardToStartTheGame] =preparationToTheGame(CardsData,quantityOfPlayers);
        setCardsOfPlayers(firstPlayersCards);
@@ -22,8 +24,18 @@ let Game=()=>{
        setUsedCards([...usedCards,firstCardToStartTheGame]);
     },[])
     useEffect(()=>{
-        if(numberOfCurrentPlayer !=-1){
-            debugger;
+        if(numberOfCurrentPlayer !=-1 & numberOfCurrentPlayer !=0){
+            let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
+            if(pickedCard !=false){
+                setTimeout(function() {
+                    console.log(pickedCard);
+                    let cardsOfPlayers_copy=[...cardsOfPlayers];
+                    let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer].filter( Card=> Card.src !==pickedCard.src);
+                    cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
+                    setCardsOfPlayers([...cardsOfPlayers_copy])
+                    setUsedCards([...usedCards,pickedCard]);
+                  }, 3*1000);
+            }
         }
     },[numberOfCurrentPlayer])
     return(
