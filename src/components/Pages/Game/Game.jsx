@@ -8,6 +8,7 @@ import Dock from "./Dock/Dock";
 import getRandomInt from "../../Helpers/Random";
 import PlayField from "./Playfield/PlayField";
 import CardComputerPick from "../../Helpers/CardComputerPick";
+import determineNumberOfCurrentPlayer from "../../Helpers/determineNumberOfCurrentPlayer";
 let Game=()=>{
     let location=useLocation();
     let quantityOfPlayers=Number(location.state.ammountOfPlayers);
@@ -31,24 +32,18 @@ let Game=()=>{
                     console.log(pickedCard);
                     if(pickedCard !=false){
                         let cardsOfPlayers_copy=[...cardsOfPlayers];
-                        let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer].filter( Card=> Card.src !==pickedCard.src);//bug - deletes doubles like 2 and 2 with the same src
+                        let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer];//bug - deletes doubles like 2 and 2 with the same src
+                        for(let i=0;i<cardsOfCurrentPlayer.length;i++){
+                            if(cardsOfCurrentPlayer[i].src ==pickedCard.src){
+                                cardsOfCurrentPlayer.splice(i,1);
+                                break;
+                            }
+                        }
                         cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
                         setCardsOfPlayers([...cardsOfPlayers_copy])
                         setUsedCards([...usedCards,pickedCard]);
+                        setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,pickedCard,numberOfCurrentPlayer,quantityOfPlayers))
                     }
-                    if(isReverse){
-                        if(numberOfCurrentPlayer-1 <0){
-                            setNumberOfCurrentPlayer(quantityOfPlayers-1);
-                        }else{
-                            setNumberOfCurrentPlayer(numberOfCurrentPlayer-1);
-                        }
-                      }else{
-                        if(numberOfCurrentPlayer+1==quantityOfPlayers){
-                            setNumberOfCurrentPlayer(0)
-                        }else{
-                            setNumberOfCurrentPlayer(numberOfCurrentPlayer+1)
-                        }
-                      }
                   }, 3*1000);
 
             
