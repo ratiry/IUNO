@@ -2,7 +2,7 @@
 const CardsData=[
     {color:"yellow",type:"number",value:0,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-yellow0.png"},
     {color:"green",type:"number",value:0,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-green0.png"},
-    {color:"red",type:"number",value:0,src:"https://www.pngmart.com/files/23/Red-Uno-Reverse-Card-PNG-File.png"},
+    {color:"red",type:"number",value:0,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75072/red-0-card-clipart-xl.png"},
     {color:"blue",type:"number",value:0,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-blue0.png"},
     {color:"yellow",type:"number",value:1,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-yellow1.png"},
     {color:"green",type:"number",value:1,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-green1.png"},

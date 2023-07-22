@@ -15,6 +15,7 @@ let Game=()=>{
     let [cardsOfPlayers,setCardsOfPlayers] = useState([]);
     let [numberOfCurrentPlayer,setNumberOfCurrentPlayer] = useState(-1);
     let [usedCards,setUsedCards] = useState([]);
+    let [isReverse,setIsReverse] = useState(false);
     window.cardsOfPlayers=cardsOfPlayers;
     useEffect(()=>{    
        let [remainingStack,firstPlayersCards,firstCardToStartTheGame] =preparationToTheGame(CardsData,quantityOfPlayers);
@@ -26,16 +27,31 @@ let Game=()=>{
     useEffect(()=>{
         if(numberOfCurrentPlayer !=-1 & numberOfCurrentPlayer !=0){
             let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
-            if(pickedCard !=false){
                 setTimeout(function() {
                     console.log(pickedCard);
-                    let cardsOfPlayers_copy=[...cardsOfPlayers];
-                    let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer].filter( Card=> Card.src !==pickedCard.src);
-                    cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
-                    setCardsOfPlayers([...cardsOfPlayers_copy])
-                    setUsedCards([...usedCards,pickedCard]);
+                    if(pickedCard !=false){
+                        let cardsOfPlayers_copy=[...cardsOfPlayers];
+                        let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer].filter( Card=> Card.src !==pickedCard.src);
+                        cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
+                        setCardsOfPlayers([...cardsOfPlayers_copy])
+                        setUsedCards([...usedCards,pickedCard]);
+                    }
+                    if(isReverse){
+                        if(numberOfCurrentPlayer-1 <0){
+                            setNumberOfCurrentPlayer(quantityOfPlayers-1);
+                        }else{
+                            setNumberOfCurrentPlayer(numberOfCurrentPlayer-1);
+                        }
+                      }else{
+                        if(numberOfCurrentPlayer+1==quantityOfPlayers){
+                            setNumberOfCurrentPlayer(0)
+                        }else{
+                            setNumberOfCurrentPlayer(numberOfCurrentPlayer+1)
+                        }
+                      }
                   }, 3*1000);
-            }
+
+            
         }
     },[numberOfCurrentPlayer])
     return(
