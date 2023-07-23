@@ -22,6 +22,8 @@ let Game=()=>{
     let [isReverse,setIsReverse] = useState(false);
     let [secondAttemptToMoveComputer,setSecondAttemptToMoveComputer]= useState(false);
     let [shouldShowTakeCardButton,setShouldShowTakeCardButton] = useState(false);
+    let [shouldShowPassButton,SetShouldShowPassButton]=useState(false);
+    window.shouldShowTakeCardButton=shouldShowTakeCardButton;
     window.cardsOfPlayers=cardsOfPlayers;
     let moveOfRealPlayer=(pickedCard)=>{
         if(numberOfCurrentPlayer ==0){
@@ -37,12 +39,29 @@ let Game=()=>{
                 cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
                 setCardsOfPlayers([...cardsOfPlayers_copy])
                 setUsedCards([...usedCards,pickedCard]);
-                setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,pickedCard,numberOfCurrentPlayer,quantityOfPlayers));
+                setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
             }else{
                 let BlackCard = cardsOfPlayers[numberOfCurrentPlayer].find(obj =>  obj.color === "black");
                 // code about using blackCard, if others cards are not right
             }
         }
+    }
+    let takeCardButtonOnClick=()=>{
+        setShouldShowTakeCardButton(false);
+        SetShouldShowPassButton(true);
+        let stackOfCards_copy=[...stackOfCards];
+        let addedCard=stackOfCards_copy.pop();
+        let cardsOfPlayers_copy=[...cardsOfPlayers];
+        let cardsOfCurrentPlayer=cardsOfPlayers_copy[numberOfCurrentPlayer];
+        cardsOfCurrentPlayer.push(addedCard);
+        cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer;
+        setCardsOfPlayers(cardsOfPlayers_copy);
+        setStackOfCards(stackOfCards_copy);
+    }
+    let passButtonOnClick=()=>{
+        SetShouldShowPassButton(false);
+        debugger;
+        setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
     }
     useEffect(()=>{    
        let [remainingStack,firstPlayersCards,firstCardToStartTheGame] =preparationToTheGame(CardsData,quantityOfPlayers);
@@ -69,7 +88,7 @@ let Game=()=>{
                         cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
                         setCardsOfPlayers([...cardsOfPlayers_copy])
                         setUsedCards([...usedCards,pickedCard]);
-                        setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,pickedCard,numberOfCurrentPlayer,quantityOfPlayers));
+                        setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
                     }else{
                         let stackOfCards_copy=[...stackOfCards];
                         let addedCard=stackOfCards_copy.pop();
@@ -82,6 +101,9 @@ let Game=()=>{
                   }, 1.5*1000);
 
             
+        }else if(numberOfCurrentPlayer==0){
+            setShouldShowTakeCardButton(true);
+
         }
     },[numberOfCurrentPlayer])
     useEffect(()=>{
@@ -100,9 +122,9 @@ let Game=()=>{
                     cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
                     setCardsOfPlayers([...cardsOfPlayers_copy])
                     setUsedCards([...usedCards,pickedCard]);
-                    setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,pickedCard,numberOfCurrentPlayer,quantityOfPlayers))
+                    setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers))
                 }else{
-                    setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,pickedCard,numberOfCurrentPlayer,quantityOfPlayers))
+                    setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers))
                 }
             },1.5*1000)
         }
@@ -115,7 +137,7 @@ let Game=()=>{
             <Player cards={cardsOfPlayers[1]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={2} quantityOfPlayers={quantityOfPlayers}/>
             <PlayField cards={usedCards}/>
             <Player cards={cardsOfPlayers[3]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={4} quantityOfPlayers={quantityOfPlayers}/>
-            <ButtonContainer>{}</ButtonContainer>
+            <ButtonContainer>{shouldShowTakeCardButton? <ButtonWithText onClick={takeCardButtonOnClick}>Take card</ButtonWithText>: shouldShowPassButton ? <ButtonWithText onClick={passButtonOnClick}>Pass</ButtonWithText> : <></>}</ButtonContainer>
             <Player moveOfRealPlayer={moveOfRealPlayer} cards={cardsOfPlayers[0]} numberOfCurrentPlayer={numberOfCurrentPlayer} isRealPlayear={true} id={1} quantityOfPlayers={quantityOfPlayers}/>
             <div></div>
         </div>
