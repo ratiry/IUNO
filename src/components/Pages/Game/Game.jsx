@@ -30,9 +30,9 @@ let Game=()=>{
             let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
                 setTimeout(function() {
                     console.log(pickedCard);
+                    let cardsOfPlayers_copy=[...cardsOfPlayers];
+                    let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer];
                     if(pickedCard !=false){
-                        let cardsOfPlayers_copy=[...cardsOfPlayers];
-                        let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer];//bug - deletes doubles like 2 and 2 with the same src
                         for(let i=0;i<cardsOfCurrentPlayer.length;i++){
                             if(cardsOfCurrentPlayer[i].src ==pickedCard.src){
                                 cardsOfCurrentPlayer.splice(i,1);
@@ -43,8 +43,17 @@ let Game=()=>{
                         setCardsOfPlayers([...cardsOfPlayers_copy])
                         setUsedCards([...usedCards,pickedCard]);
                         setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,pickedCard,numberOfCurrentPlayer,quantityOfPlayers))
+                    }else{
+                        let stackOfCards_copy=[...stackOfCards];
+                        let addedCard=stackOfCards_copy.pop();
+                        cardsOfCurrentPlayer.push(addedCard);
+                        cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer;
+                        debugger;
+                        setCardsOfPlayers(cardsOfPlayers_copy);
+                        setStackOfCards(stackOfCards_copy);
+                        
                     }
-                  }, 3*1000);
+                  }, 1.5*1000);
 
             
         }
