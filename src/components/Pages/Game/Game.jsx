@@ -22,7 +22,7 @@ let Game=()=>{
     let [isReverse,setIsReverse] = useState(false);
     let [secondAttemptToMoveComputer,setSecondAttemptToMoveComputer]= useState(false);
     let [shouldShowTakeCardButton,setShouldShowTakeCardButton] = useState(false);
-    let [shouldShowPassButton,SetShouldShowPassButton]=useState(false);
+    let [shouldShowPassButton,setShouldShowPassButton]=useState(false);
     window.shouldShowTakeCardButton=shouldShowTakeCardButton;
     window.cardsOfPlayers=cardsOfPlayers;
     let moveOfRealPlayer=(pickedCard)=>{
@@ -40,6 +40,8 @@ let Game=()=>{
                 setCardsOfPlayers([...cardsOfPlayers_copy])
                 setUsedCards([...usedCards,pickedCard]);
                 setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
+                setShouldShowTakeCardButton(false);
+                setShouldShowPassButton(false);
             }else{
                 let BlackCard = cardsOfPlayers[numberOfCurrentPlayer].find(obj =>  obj.color === "black");
                 // code about using blackCard, if others cards are not right
@@ -48,7 +50,7 @@ let Game=()=>{
     }
     let takeCardButtonOnClick=()=>{
         setShouldShowTakeCardButton(false);
-        SetShouldShowPassButton(true);
+        setShouldShowPassButton(true);
         let stackOfCards_copy=[...stackOfCards];
         let addedCard=stackOfCards_copy.pop();
         let cardsOfPlayers_copy=[...cardsOfPlayers];
@@ -59,7 +61,7 @@ let Game=()=>{
         setStackOfCards(stackOfCards_copy);
     }
     let passButtonOnClick=()=>{
-        SetShouldShowPassButton(false);
+        setShouldShowPassButton(false);
         debugger;
         setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
     }
