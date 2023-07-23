@@ -3,6 +3,7 @@ import classes from "./Welcome.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { URLs } from "../../../App";
+import {ButtonWithText} from "./../../Common/Buttons/Buttons.jsx";
 import P from "../../Common/Typography/P/P";
 let Welcome=(props)=>{
     let navigate=useNavigate();
@@ -41,7 +42,7 @@ let Welcome=(props)=>{
                     <option >4</option>
                 </select>
                 </div>
-                <button>Play</button>
+                <ButtonWithText>Play</ButtonWithText>
             </form>
         </div>
     )
