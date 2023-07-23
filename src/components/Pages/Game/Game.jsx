@@ -19,11 +19,26 @@ let Game=()=>{
     let [usedCards,setUsedCards] = useState([]);
     let [isReverse,setIsReverse] = useState(false);
     let [secondAttemptToMoveComputer,setSecondAttemptToMoveComputer]= useState(false);
+    let [shouldShowTakeCardButton,setShouldShowTakeCardButton] = useState(false);
     window.cardsOfPlayers=cardsOfPlayers;
     let moveOfRealPlayer=(pickedCard)=>{
         if(numberOfCurrentPlayer ==0){
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1])){
-                
+                let cardsOfPlayers_copy=[...cardsOfPlayers];
+                let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer];
+                for(let i=0;i<cardsOfCurrentPlayer.length;i++){
+                    if(cardsOfCurrentPlayer[i].src ==pickedCard.src){
+                        cardsOfCurrentPlayer.splice(i,1);
+                        break;
+                    }
+                }
+                cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
+                setCardsOfPlayers([...cardsOfPlayers_copy])
+                setUsedCards([...usedCards,pickedCard]);
+                setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,pickedCard,numberOfCurrentPlayer,quantityOfPlayers));
+            }else{
+                let BlackCard = cardsOfPlayers[numberOfCurrentPlayer].find(obj =>  obj.color === "black");
+                // code about using blackCard, if others cards are not right
             }
         }
     }
@@ -52,7 +67,7 @@ let Game=()=>{
                         cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
                         setCardsOfPlayers([...cardsOfPlayers_copy])
                         setUsedCards([...usedCards,pickedCard]);
-                        setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,pickedCard,numberOfCurrentPlayer,quantityOfPlayers))
+                        setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,pickedCard,numberOfCurrentPlayer,quantityOfPlayers));
                     }else{
                         let stackOfCards_copy=[...stackOfCards];
                         let addedCard=stackOfCards_copy.pop();
