@@ -8,7 +8,7 @@ let Player=(props)=>{
             
             return(
             <div className={classes.Player}>
-                {props.cards && props.cards.map((card)=><Card position={"realPlayers"} src={card.src} color={card.color} value={card.value} type={card.type}/>)}
+                {props.cards && props.cards.map((card)=><Card moveOfRealPlayer={props.moveOfRealPlayer} position={"realPlayers"} src={card.src} color={card.color} value={card.value} type={card.type}/>)}
                 {props.numberOfCurrentPlayer ==props.id-1 && <div className={classes.alertOfMove}><P>  it's your move now </P></div>}
 
             </div>

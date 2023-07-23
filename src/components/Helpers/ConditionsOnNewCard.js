@@ -1,18 +1,19 @@
 
 let ConditionsOnNewCard=(candidatCard,lastCard)=>{
+    let IsProper=false;
     if((candidatCard.type!="number" & lastCard.type=="number") || (candidatCard.type=="number" & lastCard.type!="number")){
         if(candidatCard.color ==lastCard.color){
-            return true;
+            IsProper= true;
         }
     }else if(candidatCard.type =="number" & lastCard.type =="number"){
         if( candidatCard.color ==lastCard.color || candidatCard.value ==lastCard.value){
-            return true;
+            IsProper= true;
         }
     }else if( candidatCard.type !="number" & lastCard.type !="number"){
         if(candidatCard.color==lastCard.color || candidatCard.type == lastCard.type){
-            return true;
+            IsProper= true;
         }
     }
-    return false;
+    return IsProper;
 }
 export default ConditionsOnNewCard;

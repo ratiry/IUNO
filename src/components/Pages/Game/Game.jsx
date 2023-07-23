@@ -9,6 +9,7 @@ import getRandomInt from "../../Helpers/Random";
 import PlayField from "./Playfield/PlayField";
 import CardComputerPick from "../../Helpers/CardComputerPick";
 import determineNumberOfCurrentPlayer from "../../Helpers/determineNumberOfCurrentPlayer";
+import ConditionsOnNewCard from "../../Helpers/ConditionsOnNewCard";
 let Game=()=>{
     let location=useLocation();
     let quantityOfPlayers=Number(location.state.ammountOfPlayers);
@@ -19,6 +20,13 @@ let Game=()=>{
     let [isReverse,setIsReverse] = useState(false);
     let [secondAttemptToMoveComputer,setSecondAttemptToMoveComputer]= useState(false);
     window.cardsOfPlayers=cardsOfPlayers;
+    let moveOfRealPlayer=(pickedCard)=>{
+        if(numberOfCurrentPlayer ==0){
+            if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1])){
+                
+            }
+        }
+    }
     useEffect(()=>{    
        let [remainingStack,firstPlayersCards,firstCardToStartTheGame] =preparationToTheGame(CardsData,quantityOfPlayers);
        setCardsOfPlayers(firstPlayersCards);
@@ -54,7 +62,7 @@ let Game=()=>{
                         setStackOfCards(stackOfCards_copy);
                         setSecondAttemptToMoveComputer(true);
                     }
-                  }, 1.5);
+                  }, 1.5*1000);
 
             
         }
@@ -66,7 +74,6 @@ let Game=()=>{
                 let cardsOfPlayers_copy=[...cardsOfPlayers];
                 let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer];
                 if(pickedCard !=false){
-                    debugger;
                     for(let i=0;i<cardsOfCurrentPlayer.length;i++){
                         if(cardsOfCurrentPlayer[i].src ==pickedCard.src){
                             cardsOfCurrentPlayer.splice(i,1);
@@ -92,7 +99,7 @@ let Game=()=>{
             <PlayField cards={usedCards}/>
             <Player cards={cardsOfPlayers[3]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={4} quantityOfPlayers={quantityOfPlayers}/>
             <div></div>
-            <Player cards={cardsOfPlayers[0]} numberOfCurrentPlayer={numberOfCurrentPlayer} isRealPlayear={true} id={1} quantityOfPlayers={quantityOfPlayers}/>
+            <Player moveOfRealPlayer={moveOfRealPlayer} cards={cardsOfPlayers[0]} numberOfCurrentPlayer={numberOfCurrentPlayer} isRealPlayear={true} id={1} quantityOfPlayers={quantityOfPlayers}/>
             <div></div>
         </div>
     )
