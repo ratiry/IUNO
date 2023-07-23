@@ -10,6 +10,8 @@ import PlayField from "./Playfield/PlayField";
 import CardComputerPick from "../../Helpers/CardComputerPick";
 import determineNumberOfCurrentPlayer from "../../Helpers/determineNumberOfCurrentPlayer";
 import ConditionsOnNewCard from "../../Helpers/ConditionsOnNewCard";
+import ButtonContainer from "./ButtonContainer/ButtonContainer";
+import { ButtonWithText } from "../../Common/Buttons/Buttons";
 let Game=()=>{
     let location=useLocation();
     let quantityOfPlayers=Number(location.state.ammountOfPlayers);
@@ -113,7 +115,7 @@ let Game=()=>{
             <Player cards={cardsOfPlayers[1]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={2} quantityOfPlayers={quantityOfPlayers}/>
             <PlayField cards={usedCards}/>
             <Player cards={cardsOfPlayers[3]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={4} quantityOfPlayers={quantityOfPlayers}/>
-            <div></div>
+            <ButtonContainer>{}</ButtonContainer>
             <Player moveOfRealPlayer={moveOfRealPlayer} cards={cardsOfPlayers[0]} numberOfCurrentPlayer={numberOfCurrentPlayer} isRealPlayear={true} id={1} quantityOfPlayers={quantityOfPlayers}/>
             <div></div>
         </div>
