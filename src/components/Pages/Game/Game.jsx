@@ -17,6 +17,7 @@ let Game=()=>{
     let [numberOfCurrentPlayer,setNumberOfCurrentPlayer] = useState(-1);
     let [usedCards,setUsedCards] = useState([]);
     let [isReverse,setIsReverse] = useState(false);
+    let [secondAttemptToMoveComputer,setSecondAttemptToMoveComputer]= useState(false);
     window.cardsOfPlayers=cardsOfPlayers;
     useEffect(()=>{    
        let [remainingStack,firstPlayersCards,firstCardToStartTheGame] =preparationToTheGame(CardsData,quantityOfPlayers);
@@ -27,9 +28,10 @@ let Game=()=>{
     },[])
     useEffect(()=>{
         if(numberOfCurrentPlayer !=-1 & numberOfCurrentPlayer !=0){
+            //if card isn't cancel of move or add towo or four
             let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
+            setSecondAttemptToMoveComputer(false);
                 setTimeout(function() {
-                    console.log(pickedCard);
                     let cardsOfPlayers_copy=[...cardsOfPlayers];
                     let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer];
                     if(pickedCard !=false){
@@ -48,16 +50,39 @@ let Game=()=>{
                         let addedCard=stackOfCards_copy.pop();
                         cardsOfCurrentPlayer.push(addedCard);
                         cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer;
-                        debugger;
                         setCardsOfPlayers(cardsOfPlayers_copy);
                         setStackOfCards(stackOfCards_copy);
-                        
+                        setSecondAttemptToMoveComputer(true);
                     }
-                  }, 1.5*1000);
+                  }, 1.5);
 
             
         }
     },[numberOfCurrentPlayer])
+    useEffect(()=>{
+        if(secondAttemptToMoveComputer){
+            let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
+            setTimeout(function(){
+                let cardsOfPlayers_copy=[...cardsOfPlayers];
+                let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer];
+                if(pickedCard !=false){
+                    debugger;
+                    for(let i=0;i<cardsOfCurrentPlayer.length;i++){
+                        if(cardsOfCurrentPlayer[i].src ==pickedCard.src){
+                            cardsOfCurrentPlayer.splice(i,1);
+                            break;
+                        }
+                    }
+                    cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
+                    setCardsOfPlayers([...cardsOfPlayers_copy])
+                    setUsedCards([...usedCards,pickedCard]);
+                    setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,pickedCard,numberOfCurrentPlayer,quantityOfPlayers))
+                }else{
+                    setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,pickedCard,numberOfCurrentPlayer,quantityOfPlayers))
+                }
+            },1.5*1000)
+        }
+    },[secondAttemptToMoveComputer])
     return(
         <div className={classes.Game}> 
             <Dock cards={stackOfCards}/>

@@ -4,7 +4,7 @@ let CardComputerPick=(myCards,lastCard)=>{
     let index=-1;
     for(let i=0;i<myCards.length;i++){
         let IsProper = ConditionsOnNewCard(myCards[i],lastCard);
-        if(IsProper){
+        if(IsProper & myCards[i].color!="black"){
             return myCards[i]
         }
     }
