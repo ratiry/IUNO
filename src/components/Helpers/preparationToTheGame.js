@@ -42,8 +42,8 @@ let preparationToTheGame=(CardsArray,quantityOfPlayers)=>{
     generatedStack=shuffle(generatedStack);
     let [remainingStack, playersCardsArray]= destributionOfCards(generatedStack,quantityOfPlayers);
     let [FirstCardToStartTheGame,remainingStack_2]=pickFirstCardToStartTheGame(remainingStack);
+    debugger;
     return [remainingStack_2, playersCardsArray,FirstCardToStartTheGame];
-
 }
 
 export default preparationToTheGame;

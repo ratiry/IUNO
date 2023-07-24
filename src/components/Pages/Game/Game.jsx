@@ -26,9 +26,11 @@ let Game=()=>{
     let [secondAttemptToMoveComputer,setSecondAttemptToMoveComputer]= useState(false);
     let [shouldShowTakeCardButton,setShouldShowTakeCardButton] = useState(false);
     let [shouldShowPassButton,setShouldShowPassButton]=useState(false);
-    window.shouldShowTakeCardButton=shouldShowTakeCardButton;
+    let [playersOutOfGame,setPlayersOutOfGame] = useState([]);
+    window.playersOutOfGame=playersOutOfGame;
     window.cardsOfPlayers=cardsOfPlayers;
     window.stackOfCards= stackOfCards;
+    window.usedCards=usedCards;
     let moveOfRealPlayer=(pickedCard)=>{
         if(numberOfCurrentPlayer ==0){
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1])){
@@ -65,16 +67,17 @@ let Game=()=>{
                 setTimeout(function() {
                     if(pickedCard !=false){
                         puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer);
+                        if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
+                        }
                     }else{
                         takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards);
                         setSecondAttemptToMoveComputer(true);
                     }
-                  }, 1.5*1000);
+                  }, 1.5);
 
             
         }else if(numberOfCurrentPlayer==0){
             setShouldShowTakeCardButton(true);
-
         }
     },[numberOfCurrentPlayer])
     useEffect(()=>{
@@ -86,19 +89,19 @@ let Game=()=>{
                 }else{
                     setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers))
                 }
-            },1.5*1000)
+            },1.5)
         }
     },[secondAttemptToMoveComputer])
     useEffect(()=>{
         if(stackOfCards.length==3){
-            let usedCardsToBeInStack = [...usedCards];
-            let lastUsedCard=usedCardsToBeInStack[usedCardsToBeInStack.length-1];
-            usedCardsToBeInStack.splice(usedCardsToBeInStack.length-1,1);
-            let stackOfCards_copy=[...stackOfCards];
-            let newStackOfCard = shuffle(stackOfCards_copy.concat(usedCardsToBeInStack));
-            setStackOfCards(newStackOfCard);
-            setUsedCards([lastUsedCard]);
-            debugger;
+            console.log(usedCards);
+            // let usedCardsToBeInStack = [...usedCards];
+            // let lastUsedCard=usedCardsToBeInStack[usedCardsToBeInStack.length-1];
+            // usedCardsToBeInStack.splice(usedCardsToBeInStack.length-1,1);
+            // let stackOfCards_copy=[...stackOfCards];
+            // let newStackOfCard = shuffle(stackOfCards_copy.concat(usedCardsToBeInStack));
+            // setStackOfCards(newStackOfCard);
+            // setUsedCards([lastUsedCard]);
         }
     },[stackOfCards])
     return(
