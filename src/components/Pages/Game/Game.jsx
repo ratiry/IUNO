@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import classes from './Game.module.scss';
 import Player from "./Player/Player";
 import { useEffect ,useState} from "react";
@@ -15,8 +15,10 @@ import { ButtonWithText } from "../../Common/Buttons/Buttons";
 import puttingCardOnPlayfield from "../../Helpers/puttingCardOnPlayfield";
 import takingCardFromStack from "../../Helpers/takingCardFromStack";
 import shuffle from "../../Helpers/shuffle";
+import { URLs } from "../../../App";
 let Game=()=>{
     let location=useLocation();
+    let navigate=useNavigate();
     let quantityOfPlayers=Number(location.state.ammountOfPlayers);
     let [stackOfCards,setStackOfCards]=useState([]);
     let [cardsOfPlayers,setCardsOfPlayers] = useState([]);
@@ -26,17 +28,32 @@ let Game=()=>{
     let [secondAttemptToMoveComputer,setSecondAttemptToMoveComputer]= useState(false);
     let [shouldShowTakeCardButton,setShouldShowTakeCardButton] = useState(false);
     let [shouldShowPassButton,setShouldShowPassButton]=useState(false);
-    let [playersOutOfGame,setPlayersOutOfGame] = useState([]);
-    window.playersOutOfGame=playersOutOfGame;
+    let [isTheEnd,setIsTheEnd] =useState(false); 
+    let [results,setResults]=useState([]);
+    let [winner,setWinner] = useState(-1);
+    window.results=results;
     window.cardsOfPlayers=cardsOfPlayers;
     window.stackOfCards= stackOfCards;
     window.usedCards=usedCards;
+    window.setIsTheEnd=setIsTheEnd;
+    window.setCardsOfPlayers=setCardsOfPlayers;
+    let resultsButtonOnClick=()=>{
+        navigate(URLs.results,{
+            state:results
+        })
+    }
     let moveOfRealPlayer=(pickedCard)=>{
         if(numberOfCurrentPlayer ==0){
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1])){
                 puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer);
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
+                debugger;
+                if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
+                    setIsTheEnd(true);
+                    setNumberOfCurrentPlayer(-1);
+                    debugger;
+                }
             }else{
                 let BlackCard = cardsOfPlayers[numberOfCurrentPlayer].find(obj =>  obj.color === "black");
                 // code about using blackCard, if others cards are not right
@@ -68,6 +85,7 @@ let Game=()=>{
                     if(pickedCard !=false){
                         puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer);
                         if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
+                            setIsTheEnd(true);
                         }
                     }else{
                         takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards);
@@ -93,28 +111,59 @@ let Game=()=>{
         }
     },[secondAttemptToMoveComputer])
     useEffect(()=>{
-        if(stackOfCards.length==3){
-            console.log(usedCards);
-            // let usedCardsToBeInStack = [...usedCards];
-            // let lastUsedCard=usedCardsToBeInStack[usedCardsToBeInStack.length-1];
-            // usedCardsToBeInStack.splice(usedCardsToBeInStack.length-1,1);
-            // let stackOfCards_copy=[...stackOfCards];
-            // let newStackOfCard = shuffle(stackOfCards_copy.concat(usedCardsToBeInStack));
-            // setStackOfCards(newStackOfCard);
-            // setUsedCards([lastUsedCard]);
+        if(isTheEnd){
+            let results_=[];
+            let winner_=[];
+            for(let i=0;i<cardsOfPlayers.length;i++){
+                let summ=0;
+                if(cardsOfPlayers[i].length>0){
+                    console.log(cardsOfPlayers[i].length);
+                    let length=cardsOfPlayers[i].length;
+                    for(let ii=0;ii<length;ii++){
+                        console.log(cardsOfPlayers[i][ii].value);
+                        summ=summ+cardsOfPlayers[i][ii].value;
+                    }
+                }
+                results_.push(summ);
+            }
+            setShouldShowTakeCardButton(false);
+            setNumberOfCurrentPlayer(-1);
+            debugger;
+            setResults(results_);
+            let theMinScore=Math.min(...results_);
+            setWinner(results_.findIndex(elem => elem === theMinScore));
         }
-    },[stackOfCards])
+    },[isTheEnd])
+    // useEffect(()=>{
+    //     if(stackOfCards.length==3){
+    //         console.log(usedCards);
+    //         // let usedCardsToBeInStack = [...usedCards];
+    //         // let lastUsedCard=usedCardsToBeInStack[usedCardsToBeInStack.length-1];
+    //         // usedCardsToBeInStack.splice(usedCardsToBeInStack.length-1,1);
+    //         // let stackOfCards_copy=[...stackOfCards];
+    //         // let newStackOfCard = shuffle(stackOfCards_copy.concat(usedCardsToBeInStack));
+    //         // setStackOfCards(newStackOfCard);
+    //         // setUsedCards([lastUsedCard]);
+    //     }
+    // },[stackOfCards])
+    // useEffect(()=>{
+    //     if(stackOfCards.length==0 & numberOfCurrentPlayer!=-1){
+    //         debugger;
+    //         setIsTheEnd(true);
+    //     }
+    // },[stackOfCards])
+
     return(
         <div className={classes.Game}> 
             <Dock cards={stackOfCards}/>
-            <Player cards={cardsOfPlayers[2]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={3} quantityOfPlayers={quantityOfPlayers}/>
+            <Player winner={winner} cards={cardsOfPlayers[2]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={3} quantityOfPlayers={quantityOfPlayers}/>
             <div></div>
-            <Player cards={cardsOfPlayers[1]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={2} quantityOfPlayers={quantityOfPlayers}/>
+            <Player winner={winner} cards={cardsOfPlayers[1]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={2} quantityOfPlayers={quantityOfPlayers}/>
             <PlayField cards={usedCards}/>
-            <Player cards={cardsOfPlayers[3]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={4} quantityOfPlayers={quantityOfPlayers}/>
+            <Player winner={winner} cards={cardsOfPlayers[3]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={4} quantityOfPlayers={quantityOfPlayers}/>
             <ButtonContainer>{shouldShowTakeCardButton? <ButtonWithText onClick={takeCardButtonOnClick}>Take card</ButtonWithText>: shouldShowPassButton ? <ButtonWithText onClick={passButtonOnClick}>Pass</ButtonWithText> : <></>}</ButtonContainer>
-            <Player moveOfRealPlayer={moveOfRealPlayer} cards={cardsOfPlayers[0]} numberOfCurrentPlayer={numberOfCurrentPlayer} isRealPlayear={true} id={1} quantityOfPlayers={quantityOfPlayers}/>
-            <div></div>
+            <Player winner={winner} moveOfRealPlayer={moveOfRealPlayer} cards={cardsOfPlayers[0]} numberOfCurrentPlayer={numberOfCurrentPlayer} isRealPlayear={true} id={1} quantityOfPlayers={quantityOfPlayers}/>
+            <div>{winner!=-1  && <ButtonWithText onClick={resultsButtonOnClick}>Results</ButtonWithText>}</div>
         </div>
     )
 }
