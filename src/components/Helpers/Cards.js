@@ -19,7 +19,7 @@ const CardsData=[
     {color:"yellow",type:"number",value:4,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-yellow4.png"},
     {color:"green",type:"number",value:4,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-green4.png"},
     {color:"red",type:"number",value:4,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-red4.png"},
-    {color:"blue",type:"number",value:4,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-blue4.png"},
+    // {color:"blue",type:"number",value:4,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-blue4.png"},
 ]
 export const cardsBackSrc="https://opengameart.org/sites/default/files/UNO-Back_0.png";
 export default CardsData;

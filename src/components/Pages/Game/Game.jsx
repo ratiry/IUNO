@@ -28,6 +28,7 @@ let Game=()=>{
     let [shouldShowPassButton,setShouldShowPassButton]=useState(false);
     window.shouldShowTakeCardButton=shouldShowTakeCardButton;
     window.cardsOfPlayers=cardsOfPlayers;
+    window.stackOfCards= stackOfCards;
     let moveOfRealPlayer=(pickedCard)=>{
         if(numberOfCurrentPlayer ==0){
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1])){
@@ -93,7 +94,9 @@ let Game=()=>{
             let usedCardsToBeInStack = [...usedCards];
             let lastUsedCard=usedCardsToBeInStack[usedCardsToBeInStack.length-1];
             usedCardsToBeInStack.splice(usedCardsToBeInStack.length-1,1);
-            setStackOfCards(shuffle([...stackOfCards,usedCardsToBeInStack]));
+            let stackOfCards_copy=[...stackOfCards];
+            let newStackOfCard = shuffle(stackOfCards_copy.concat(usedCardsToBeInStack));
+            setStackOfCards(newStackOfCard);
             setUsedCards([lastUsedCard]);
             debugger;
         }
