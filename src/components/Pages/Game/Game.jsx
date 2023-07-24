@@ -12,6 +12,8 @@ import determineNumberOfCurrentPlayer from "../../Helpers/determineNumberOfCurre
 import ConditionsOnNewCard from "../../Helpers/ConditionsOnNewCard";
 import ButtonContainer from "./ButtonContainer/ButtonContainer";
 import { ButtonWithText } from "../../Common/Buttons/Buttons";
+import puttingCardOnPlayfield from "../../Helpers/puttingCardOnPlayfield";
+import takingCardFromStack from "../../Helpers/takingCardFromStack";
 let Game=()=>{
     let location=useLocation();
     let quantityOfPlayers=Number(location.state.ammountOfPlayers);
@@ -28,18 +30,7 @@ let Game=()=>{
     let moveOfRealPlayer=(pickedCard)=>{
         if(numberOfCurrentPlayer ==0){
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1])){
-                let cardsOfPlayers_copy=[...cardsOfPlayers];
-                let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer];
-                for(let i=0;i<cardsOfCurrentPlayer.length;i++){
-                    if(cardsOfCurrentPlayer[i].src ==pickedCard.src){
-                        cardsOfCurrentPlayer.splice(i,1);
-                        break;
-                    }
-                }
-                cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
-                setCardsOfPlayers([...cardsOfPlayers_copy])
-                setUsedCards([...usedCards,pickedCard]);
-                setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
+                puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer);
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
             }else{
@@ -51,14 +42,7 @@ let Game=()=>{
     let takeCardButtonOnClick=()=>{
         setShouldShowTakeCardButton(false);
         setShouldShowPassButton(true);
-        let stackOfCards_copy=[...stackOfCards];
-        let addedCard=stackOfCards_copy.pop();
-        let cardsOfPlayers_copy=[...cardsOfPlayers];
-        let cardsOfCurrentPlayer=cardsOfPlayers_copy[numberOfCurrentPlayer];
-        cardsOfCurrentPlayer.push(addedCard);
-        cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer;
-        setCardsOfPlayers(cardsOfPlayers_copy);
-        setStackOfCards(stackOfCards_copy);
+        takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards);
     }
     let passButtonOnClick=()=>{
         setShouldShowPassButton(false);
@@ -78,27 +62,10 @@ let Game=()=>{
             let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
             setSecondAttemptToMoveComputer(false);
                 setTimeout(function() {
-                    let cardsOfPlayers_copy=[...cardsOfPlayers];
-                    let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer];
                     if(pickedCard !=false){
-                        for(let i=0;i<cardsOfCurrentPlayer.length;i++){
-                            if(cardsOfCurrentPlayer[i].src ==pickedCard.src){
-                                cardsOfCurrentPlayer.splice(i,1);
-                                break;
-                            }
-                        }
-                        cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
-                        setCardsOfPlayers([...cardsOfPlayers_copy])
-                        setUsedCards([...usedCards,pickedCard]);
-                        setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
+                        puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer);
                     }else{
-                        let stackOfCards_copy=[...stackOfCards];
-                        let addedCard=stackOfCards_copy.pop();
-                        cardsOfCurrentPlayer.push(addedCard);
-                        cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer;
-                        setCardsOfPlayers(cardsOfPlayers_copy);
-                        setStackOfCards(stackOfCards_copy);
-                        setSecondAttemptToMoveComputer(true);
+                        takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards);
                     }
                   }, 1.5*1000);
 
@@ -112,19 +79,8 @@ let Game=()=>{
         if(secondAttemptToMoveComputer){
             let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
             setTimeout(function(){
-                let cardsOfPlayers_copy=[...cardsOfPlayers];
-                let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer];
                 if(pickedCard !=false){
-                    for(let i=0;i<cardsOfCurrentPlayer.length;i++){
-                        if(cardsOfCurrentPlayer[i].src ==pickedCard.src){
-                            cardsOfCurrentPlayer.splice(i,1);
-                            break;
-                        }
-                    }
-                    cardsOfPlayers_copy[numberOfCurrentPlayer]=cardsOfCurrentPlayer; 
-                    setCardsOfPlayers([...cardsOfPlayers_copy])
-                    setUsedCards([...usedCards,pickedCard]);
-                    setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers))
+                    puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer);
                 }else{
                     setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers))
                 }
