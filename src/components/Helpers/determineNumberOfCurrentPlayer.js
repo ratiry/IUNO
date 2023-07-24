@@ -1,6 +1,5 @@
 
 let determineNumberOfCurrentPlayer=(isReverse,numberOfCurrentPlayer,quantityOfPlayers)=>{
-    debugger;
     let numberOfCurrentPlayer_copy=numberOfCurrentPlayer;
     if(isReverse){
         if(numberOfCurrentPlayer-1 <0){
@@ -15,7 +14,6 @@ let determineNumberOfCurrentPlayer=(isReverse,numberOfCurrentPlayer,quantityOfPl
             numberOfCurrentPlayer_copy=numberOfCurrentPlayer+1;
         }
           }
-    debugger;
     return numberOfCurrentPlayer_copy;
 }
 export default determineNumberOfCurrentPlayer;

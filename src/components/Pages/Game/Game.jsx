@@ -14,6 +14,7 @@ import ButtonContainer from "./ButtonContainer/ButtonContainer";
 import { ButtonWithText } from "../../Common/Buttons/Buttons";
 import puttingCardOnPlayfield from "../../Helpers/puttingCardOnPlayfield";
 import takingCardFromStack from "../../Helpers/takingCardFromStack";
+import shuffle from "../../Helpers/shuffle";
 let Game=()=>{
     let location=useLocation();
     let quantityOfPlayers=Number(location.state.ammountOfPlayers);
@@ -46,7 +47,6 @@ let Game=()=>{
     }
     let passButtonOnClick=()=>{
         setShouldShowPassButton(false);
-        debugger;
         setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
     }
     useEffect(()=>{    
@@ -87,6 +87,16 @@ let Game=()=>{
             },1.5*1000)
         }
     },[secondAttemptToMoveComputer])
+    useEffect(()=>{
+        if(stackOfCards.length==3){
+            let usedCardsToBeInStack = [...usedCards];
+            let lastUsedCard=usedCardsToBeInStack[usedCardsToBeInStack.length-1];
+            usedCardsToBeInStack.splice(usedCardsToBeInStack.length-1,1);
+            setStackOfCards(shuffle([...stackOfCards,usedCardsToBeInStack]));
+            setUsedCards([lastUsedCard]);
+            debugger;
+        }
+    },[stackOfCards])
     return(
         <div className={classes.Game}> 
             <Dock cards={stackOfCards}/>
