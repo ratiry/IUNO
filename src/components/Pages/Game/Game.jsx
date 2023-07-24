@@ -66,6 +66,7 @@ let Game=()=>{
                         puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer);
                     }else{
                         takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards);
+                        setSecondAttemptToMoveComputer(true);
                     }
                   }, 1.5*1000);
 
