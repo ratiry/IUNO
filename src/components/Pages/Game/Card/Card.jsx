@@ -12,13 +12,13 @@ let Card=(props)=>{
     }
     switch(props.position){
         case "realPlayers":
-            return <img onClick={onClick} className={classes.Card + " " + classes.realPlayer} src={props.src} alt={props.color + " " + props.value} />
+            return <div className={classes.playfieldCardCardContainer}><img onClick={onClick} className={classes.Card + " " + classes.realPlayer} src={props.src} alt={props.color + " " + props.value} /></div> 
         case "dock":
-            return <img className={classes.Card + " " + classes.backCard} src={cardsBackSrc} alt={"dock card"} />
+            return <div className={classes.playfieldCardCardContainer}><img className={classes.Card + " " + classes.backCard} src={cardsBackSrc} alt={"dock card"} /></div> 
         case "playfield":
-            return <img className={classes.Card + " " + classes.playfieldCard} src={props.src} alt={props.color + " " + props.value} />
+            return <div className={classes.playfieldCardCardContainer}><img className={classes.Card + " " + classes.playfieldCard} src={props.src} alt={props.color + " " + props.value}  />{props.color =="green" && <div style={{background:props.color}} className={classes.circle}></div>} </div>
         default:
-            return <img className={classes.Card} src={props.src} alt={props.color + " " + props.value} />
+            return <div className={classes.playfieldCardCardContainer}><img className={classes.Card} src={props.src} alt={props.color + " " + props.value} /></div> 
     }
 }
 export default Card;

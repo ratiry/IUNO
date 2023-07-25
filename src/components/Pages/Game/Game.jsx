@@ -47,13 +47,12 @@ let Game=()=>{
         })
     }
     let moveOfRealPlayer=(pickedCard)=>{
-        if(numberOfCurrentPlayer ==0){
+        if(numberOfCurrentPlayer ==0 & !isTheEnd){
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1],needToTransferSkip)){
                 puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
                 if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
-                    debugger;
                     setNeedToTransferSkip(true);
                 }
                 if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
@@ -61,7 +60,6 @@ let Game=()=>{
                     setNumberOfCurrentPlayer(-1);
                 }
             }else{
-                let BlackCard = cardsOfPlayers[numberOfCurrentPlayer].find(obj =>  obj.color === "black");
                 // code about using blackCard, if others cards are not right
             }
         }
@@ -92,6 +90,9 @@ let Game=()=>{
     },[])
     useEffect(()=>{
         if(numberOfCurrentPlayer !=-1 & numberOfCurrentPlayer !=0 & !isTheEnd){
+            setShouldShowPassButton(false);
+            setShouldShowTakeCardButton(false);
+            SetShouldShowSkipButton(false);
             if(needToTransferSkip){
                 setTimeout(function(){
                     let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1],needToTransferSkip);

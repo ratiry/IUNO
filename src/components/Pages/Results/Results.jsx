@@ -13,6 +13,7 @@ let Results=(props)=>{
     let resultsOrgranized=bubbleSort(results);
     let placeOfPlayer = resultsOrgranized.indexOf(playersScore);
     let places=[firstPlaceSrc,secondPlaceSrc,thirdPlaceSrc,fourthPlaceSrc];
+    debugger;
     return(
         <div className={classes.results}>
             <img className={classes.resultsImg} src={places[placeOfPlayer]} alt="" />
