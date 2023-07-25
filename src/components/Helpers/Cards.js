@@ -37,10 +37,15 @@ const CardsData=[
     {color:"red",type:"number",value:8,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-red8.png"},
     {color:"blue",type:"number",value:8,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75054/blue-8-card-clipart-xl.png"},
 
-    {color:"yellow",type:"reverse",value:25,src:"https://upload.wikimedia.org/wikipedia/commons/f/f5/UNO_reverse_card.png"},
-    {color:"green",type:"reverse",value:25,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75070/green-reverse-card-clipart-xl.png"},
-    {color:"red",type:"reverse",value:25,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75083/red-reverse-card-clipart-xl.png"},
-    {color:"blue",type:"reverse",value:25,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75057/blue-reverse-card-clipart-xl.png"},
+    {color:"yellow",type:"reverse",value:20,src:"https://upload.wikimedia.org/wikipedia/commons/f/f5/UNO_reverse_card.png"},
+    {color:"green",type:"reverse",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75070/green-reverse-card-clipart-xl.png"},
+    {color:"red",type:"reverse",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75083/red-reverse-card-clipart-xl.png"},
+    {color:"blue",type:"reverse",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75057/blue-reverse-card-clipart-xl.png"},
+
+    {color:"yellow",type:"skip",value:20,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-yellowskip.png"},
+    {color:"green",type:"skip",value:20,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-greenskip.png"},
+    {color:"red",type:"skip",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75082/red-skip-card-clipart-sm.png"},
+    {color:"blue",type:"skip",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75056/blue-skip-card-clipart-xl.png"},
 ]
 export const cardsBackSrc="https://opengameart.org/sites/default/files/UNO-Back_0.png";
 export const firstPlaceSrc="https://www.svgrepo.com/show/396189/1st-place-medal.svg";

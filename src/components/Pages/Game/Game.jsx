@@ -31,6 +31,7 @@ let Game=()=>{
     let [isTheEnd,setIsTheEnd] =useState(false); 
     let [results,setResults]=useState([]);
     let [winner,setWinner] = useState(-1);
+    let [needToTransferSkip,setNeedToTransferSkip]=useState(false);
     window.results=results;
     window.cardsOfPlayers=cardsOfPlayers;
     window.stackOfCards= stackOfCards;
@@ -50,11 +51,12 @@ let Game=()=>{
                 puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
-                debugger;
+                if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
+                    setNeedToTransferSkip(true);
+                }
                 if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
                     setIsTheEnd(true);
                     setNumberOfCurrentPlayer(-1);
-                    debugger;
                 }
             }else{
                 let BlackCard = cardsOfPlayers[numberOfCurrentPlayer].find(obj =>  obj.color === "black");
@@ -85,6 +87,9 @@ let Game=()=>{
             setSecondAttemptToMoveComputer(false);
                 setTimeout(function() {
                     if(pickedCard !=false){
+                        if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
+                            setNeedToTransferSkip(true);
+                        }
                         puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                         if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
                             setIsTheEnd(true);
@@ -130,7 +135,6 @@ let Game=()=>{
             }
             setShouldShowTakeCardButton(false);
             setNumberOfCurrentPlayer(-1);
-            debugger;
             setResults(results_);
             let theMinScore=Math.min(...results_);
             setWinner(results_.findIndex(elem => elem === theMinScore));

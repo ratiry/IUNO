@@ -14,8 +14,17 @@ let destributionOfCards=(generatedStack,quantityOfPlayers)=>{
 }
 let pickFirstCardToStartTheGame=(generatedStack)=>{
     let generatedStack_copy=[...generatedStack];
-    let card=generatedStack.pop();
-    return [card,generatedStack]
+    
+    // let card=generatedStack.pop();
+    let card={};
+    for(let i=0;i<generatedStack_copy.length;i++){
+        if(generatedStack_copy[i].type=="number"){
+            card=generatedStack_copy[i];
+            generatedStack_copy.splice(i,1);
+            break;
+        }
+    }
+    return [card,generatedStack_copy]
 }
 let GenerateStack=(CardsArray,quantityOfPlayers)=>{
     let generatedStack=[];

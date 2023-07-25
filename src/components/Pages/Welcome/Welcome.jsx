@@ -10,7 +10,7 @@ let Welcome=(props)=>{
     let ComputerPlayers=[];
     let computerPlayersHtml=[];
     let preffiledValues={
-      ammountOfPlayers:'2'
+      ammountOfPlayers:'3'
     }
     const  {
       register,
