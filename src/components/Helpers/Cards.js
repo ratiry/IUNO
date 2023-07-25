@@ -42,4 +42,9 @@ const CardsData=[
     {color:"blue",type:"number",value:8,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75054/blue-8-card-clipart-xl.png"},
 ]
 export const cardsBackSrc="https://opengameart.org/sites/default/files/UNO-Back_0.png";
+export const firstPlaceSrc="https://www.svgrepo.com/show/396189/1st-place-medal.svg";
+export const secondPlaceSrc="https://www.svgrepo.com/download/404693/2nd-place-medal.svg";
+export const thirdPlaceSrc="https://www.svgrepo.com/download/380528/medal-champion-award-winner-olympic-13.svg";
+export const fourthPlaceSrc="https://upload.wikimedia.org/wikipedia/commons/3/37/4th_place_icon.png";
+
 export default CardsData;

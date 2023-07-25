@@ -38,8 +38,10 @@ let Game=()=>{
     window.setIsTheEnd=setIsTheEnd;
     window.setCardsOfPlayers=setCardsOfPlayers;
     let resultsButtonOnClick=()=>{
-        navigate(URLs.results,{
-            state:results
+        navigate("/" + URLs.results,{
+            state:{
+                results:results
+            }
         })
     }
     let moveOfRealPlayer=(pickedCard)=>{
