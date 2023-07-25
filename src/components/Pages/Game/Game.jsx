@@ -77,7 +77,7 @@ let Game=()=>{
        setUsedCards([...usedCards,firstCardToStartTheGame]);
     },[])
     useEffect(()=>{
-        if(numberOfCurrentPlayer !=-1 & numberOfCurrentPlayer !=0){
+        if(numberOfCurrentPlayer !=-1 & numberOfCurrentPlayer !=0 & !isTheEnd){
             //if card isn't cancel of move or add towo or four
             let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
             setSecondAttemptToMoveComputer(false);
