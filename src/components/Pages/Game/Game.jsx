@@ -53,6 +53,7 @@ let Game=()=>{
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
                 if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
+                    debugger;
                     setNeedToTransferSkip(true);
                 }
                 if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
@@ -68,11 +69,15 @@ let Game=()=>{
     let skipButtonOnClick=()=>{
         setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
         SetShouldShowSkipButton(false);
+        setNeedToTransferSkip(false);
+        if(usedCards[usedCards.length-1].type=="addtwo"){
+            takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards,2);
+        }
     }
     let takeCardButtonOnClick=()=>{
         setShouldShowTakeCardButton(false);
         setShouldShowPassButton(true);
-        takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards);
+        takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards,1);
     }
     let passButtonOnClick=()=>{
         setShouldShowPassButton(false);
@@ -94,6 +99,9 @@ let Game=()=>{
                         puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                     }else{
                         setNeedToTransferSkip(false);
+                        if(usedCards[usedCards.length-1].type=="addtwo"){
+                            takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards,2);
+                        }
                     }
                     setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
                 },1.5*1000)
@@ -110,7 +118,7 @@ let Game=()=>{
                                 setIsTheEnd(true);
                             }
                         }else{
-                            takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards);
+                            takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards,1);
                             setSecondAttemptToMoveComputer(true);
                         }
                       }, 1.5*1000);
@@ -130,6 +138,7 @@ let Game=()=>{
                 if(pickedCard !=false){
                     puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                     if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
+                        debugger;
                         setNeedToTransferSkip(true);
                     }
                 }else{
