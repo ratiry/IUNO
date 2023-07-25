@@ -47,7 +47,7 @@ let Game=()=>{
     let moveOfRealPlayer=(pickedCard)=>{
         if(numberOfCurrentPlayer ==0){
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1])){
-                puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer);
+                puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
                 debugger;
@@ -85,7 +85,7 @@ let Game=()=>{
             setSecondAttemptToMoveComputer(false);
                 setTimeout(function() {
                     if(pickedCard !=false){
-                        puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer);
+                        puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                         if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
                             setIsTheEnd(true);
                         }
@@ -93,7 +93,7 @@ let Game=()=>{
                         takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards);
                         setSecondAttemptToMoveComputer(true);
                     }
-                  }, 1.5);
+                  }, 1.5*1000);
 
             
         }else if(numberOfCurrentPlayer==0){
@@ -105,11 +105,11 @@ let Game=()=>{
             let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
             setTimeout(function(){
                 if(pickedCard !=false){
-                    puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer);
+                    puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                 }else{
                     setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers))
                 }
-            },1.5)
+            },1.5*1000)
         }
     },[secondAttemptToMoveComputer])
     useEffect(()=>{
