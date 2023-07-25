@@ -46,6 +46,11 @@ const CardsData=[
     {color:"green",type:"skip",value:20,src:"https://unocardinfo.victorhomedia.com/graphics/uno_card-greenskip.png"},
     {color:"red",type:"skip",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75082/red-skip-card-clipart-sm.png"},
     {color:"blue",type:"skip",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75056/blue-skip-card-clipart-xl.png"},
+
+    // {color:"yellow",type:"addtwo",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75097/yellow-draw-two-card-clipart-xl.png"},
+    // {color:"green",type:"addtwo",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75071/green-draw-two-card-clipart-xl.png"},
+    // {color:"red",type:"addtwo",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75084/red-draw-two-card-clipart-xl.png"},
+    // {color:"blue",type:"addtwo",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75058/blue-draw-two-card-clipart-md.png"},
 ]
 export const cardsBackSrc="https://opengameart.org/sites/default/files/UNO-Back_0.png";
 export const firstPlaceSrc="https://www.svgrepo.com/show/396189/1st-place-medal.svg";

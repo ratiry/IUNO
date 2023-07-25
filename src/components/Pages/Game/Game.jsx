@@ -32,6 +32,7 @@ let Game=()=>{
     let [results,setResults]=useState([]);
     let [winner,setWinner] = useState(-1);
     let [needToTransferSkip,setNeedToTransferSkip]=useState(false);
+    let [shouldShowSkipButton,SetShouldShowSkipButton]=useState(false);
     window.results=results;
     window.cardsOfPlayers=cardsOfPlayers;
     window.stackOfCards= stackOfCards;
@@ -47,7 +48,7 @@ let Game=()=>{
     }
     let moveOfRealPlayer=(pickedCard)=>{
         if(numberOfCurrentPlayer ==0){
-            if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1])){
+            if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1],needToTransferSkip)){
                 puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
@@ -63,6 +64,10 @@ let Game=()=>{
                 // code about using blackCard, if others cards are not right
             }
         }
+    }
+    let skipButtonOnClick=()=>{
+        setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
+        SetShouldShowSkipButton(false);
     }
     let takeCardButtonOnClick=()=>{
         setShouldShowTakeCardButton(false);
@@ -82,27 +87,40 @@ let Game=()=>{
     },[])
     useEffect(()=>{
         if(numberOfCurrentPlayer !=-1 & numberOfCurrentPlayer !=0 & !isTheEnd){
-            //if card isn't cancel of move or add towo or four
-            let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
-            setSecondAttemptToMoveComputer(false);
-                setTimeout(function() {
+            if(needToTransferSkip){
+                setTimeout(function(){
+                    let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1],needToTransferSkip);
                     if(pickedCard !=false){
-                        if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
-                            setNeedToTransferSkip(true);
-                        }
                         puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
-                        if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
-                            setIsTheEnd(true);
-                        }
                     }else{
-                        takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards);
-                        setSecondAttemptToMoveComputer(true);
+                        setNeedToTransferSkip(false);
                     }
-                  }, 1.5*1000);
-
-            
+                    setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
+                },1.5*1000)
+            }else{
+                let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
+                setSecondAttemptToMoveComputer(false);
+                    setTimeout(function() {
+                        if(pickedCard !=false){
+                            if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
+                                setNeedToTransferSkip(true);
+                            }
+                            puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
+                            if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
+                                setIsTheEnd(true);
+                            }
+                        }else{
+                            takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards);
+                            setSecondAttemptToMoveComputer(true);
+                        }
+                      }, 1.5*1000);
+            }    
         }else if(numberOfCurrentPlayer==0){
-            setShouldShowTakeCardButton(true);
+            if(needToTransferSkip){
+                SetShouldShowSkipButton(true);
+            }else{
+                setShouldShowTakeCardButton(true);
+            }
         }
     },[numberOfCurrentPlayer])
     useEffect(()=>{
@@ -111,6 +129,9 @@ let Game=()=>{
             setTimeout(function(){
                 if(pickedCard !=false){
                     puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
+                    if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
+                        setNeedToTransferSkip(true);
+                    }
                 }else{
                     setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers))
                 }
@@ -167,7 +188,7 @@ let Game=()=>{
             <Player winner={winner} cards={cardsOfPlayers[1]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={2} quantityOfPlayers={quantityOfPlayers}/>
             <PlayField cards={usedCards}/>
             <Player winner={winner} cards={cardsOfPlayers[3]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={4} quantityOfPlayers={quantityOfPlayers}/>
-            <ButtonContainer>{shouldShowTakeCardButton? <ButtonWithText onClick={takeCardButtonOnClick}>Take card</ButtonWithText>: shouldShowPassButton ? <ButtonWithText onClick={passButtonOnClick}>Pass</ButtonWithText> : <></>}</ButtonContainer>
+            <ButtonContainer>{shouldShowTakeCardButton? <ButtonWithText onClick={takeCardButtonOnClick}>Take card</ButtonWithText>: shouldShowPassButton ? <ButtonWithText onClick={passButtonOnClick}>Pass</ButtonWithText> : shouldShowSkipButton ? <ButtonWithText onClick={skipButtonOnClick}>Skip</ButtonWithText>:<></>}</ButtonContainer>
             <Player winner={winner} moveOfRealPlayer={moveOfRealPlayer} cards={cardsOfPlayers[0]} numberOfCurrentPlayer={numberOfCurrentPlayer} isRealPlayear={true} id={1} quantityOfPlayers={quantityOfPlayers}/>
             <div>{winner!=-1  && <ButtonWithText onClick={resultsButtonOnClick}>Results</ButtonWithText>}</div>
         </div>
