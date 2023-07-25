@@ -6,8 +6,8 @@ import Game from './components/Pages/Game/Game';
 import Results from './components/Pages/Results/Results';
 export const URLs={
   welcome:'/',
-  game:"Game",
-  results:"Results"
+  game:"/Game",
+  results:"/Results"
 }
 function App() {
 

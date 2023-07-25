@@ -7,8 +7,13 @@
     height:60vh;
     padding:10px;
     .resultsImg{
-        width:300px;
+        width:50%;
         grid-row-start: 1;
         grid-row-end:3;
+    }
+    .buttonsContainer{
+        display:flex;
+        justify-content:space-evenly;
+        width:inherit;
     }
 }

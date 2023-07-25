@@ -38,9 +38,9 @@ let Game=()=>{
     window.setIsTheEnd=setIsTheEnd;
     window.setCardsOfPlayers=setCardsOfPlayers;
     let resultsButtonOnClick=()=>{
-        navigate("/" + URLs.results,{
+        navigate( URLs.results,{
             state:{
-                results:results
+                results:results,
             }
         })
     }

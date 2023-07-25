@@ -7,6 +7,6 @@ export let ButtonWithText=(props)=>{
 }
 export let ButtonWithIcon=(props)=>{
     return(
-        <button className={classes.ButtonWithText}>{props.children}</button>
+        <button onClick={props.onClick} className={classes.ButtonWithIcon}>{props.children}</button>
     )
 }
