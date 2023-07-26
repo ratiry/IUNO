@@ -4,6 +4,8 @@ let ConditionsOnNewCard=(candidatCard,lastCard,needToTransferSkip)=>{
     if(needToTransferSkip){
         if(candidatCard.type ==lastCard.type){
             IsProper=true;
+        }else if(lastCard.type=="addfour" &  candidatCard.type=="addtwo" & candidatCard.color ==lastCard.color){
+            IsProper=true;
         }
     }else{
         if((candidatCard.type!="number" & lastCard.type=="number") || (candidatCard.type=="number" & lastCard.type!="number")){
@@ -23,6 +25,9 @@ let ConditionsOnNewCard=(candidatCard,lastCard,needToTransferSkip)=>{
             IsProper=true;
         }
     }   
+    if(candidatCard.type=="addfour"){
+        IsProper=false;
+    }
     return IsProper;
 }
 export default ConditionsOnNewCard;

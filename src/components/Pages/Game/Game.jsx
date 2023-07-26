@@ -54,13 +54,15 @@ let Game=()=>{
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1],needToTransferSkip)){
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
-                if(pickedCard.type=="addfour" || pickedCard.type =="ordercolor"){
+                if(pickedCard){}
+                if(pickedCard.type =="ordercolor"){
                     setShouldShowPickColorButton(true);
                     setPickedBlackCard(pickedCard);
                 }else{
                     setShouldShowPickColorButton(false);
+                    debugger;
                     puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
-                    if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
+                    if(pickedCard.type=="addtwo" ||  pickedCard.type=="skip"){
                         setNeedToTransferSkip(true);
                     }
                     if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
@@ -68,8 +70,19 @@ let Game=()=>{
                         setNumberOfCurrentPlayer(-1);
                     }
                 }
-            }else{
-                // code about using blackCard, if others cards are not right
+            }else if(pickedCard.type=="addfour"){//bug
+                let IsAllowedToUseAddFour=true;
+                debugger;
+                for(let i=0;i<cardsOfPlayers[numberOfCurrentPlayer].length;i++){
+                    if(ConditionsOnNewCard(cardsOfPlayers[numberOfCurrentPlayer][i],usedCards[usedCards.length-1],needToTransferSkip)){
+                        IsAllowedToUseAddFour=false;
+                        
+                    }
+                }
+                if(IsAllowedToUseAddFour){
+                    setShouldShowPickColorButton(true);
+                    setPickedBlackCard(pickedCard);
+                }
             }
         }
     }
@@ -77,9 +90,14 @@ let Game=()=>{
         let pickedBlackCard_copy=pickedBlackCard;
         pickedBlackCard_copy.color=color;
         setPickedBlackCard({});
-        debugger;
+        if(pickedBlackCard_copy.type=="addfour"){
+            setNeedToTransferSkip(true);
+        }
         setShouldShowPickColorButton(false);
         puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedBlackCard_copy,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
+        if(cardsOfPlayers[numberOfCurrentPlayer].length==0){
+            setIsTheEnd(true);
+        }
     }
     let skipButtonOnClick=()=>{
         setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
@@ -87,6 +105,9 @@ let Game=()=>{
         setNeedToTransferSkip(false);
         if(usedCards[usedCards.length-1].type=="addtwo"){
             takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards,2);
+        }
+        if(usedCards[usedCards.length-1].type=="addfour"){
+            takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards,4);
         }
     }
     let takeCardButtonOnClick=()=>{
@@ -115,11 +136,18 @@ let Game=()=>{
                 setTimeout(function(){
                     let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1],needToTransferSkip);
                     if(pickedCard !=false){
+                        if(pickedCard.type =="addfour"){
+                            let color=colorsArray[getRandomInt(colorsArray.length)];
+                            pickedCard.color=color;
+                        }
                         puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                     }else{
                         setNeedToTransferSkip(false);
                         if(usedCards[usedCards.length-1].type=="addtwo"){
                             takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards,2);
+                        }
+                        if(usedCards[usedCards.length-1].type=="addfour"){
+                            takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards,4);
                         }
                     }
                     setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
@@ -165,7 +193,6 @@ let Game=()=>{
                     }
                     puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                     if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
-                        debugger;
                         setNeedToTransferSkip(true);
                     }
                 }else{
@@ -190,6 +217,9 @@ let Game=()=>{
                 results_.push(summ);
             }
             setShouldShowTakeCardButton(false);
+            SetShouldShowSkipButton(false);
+            setShouldShowPassButton(false);
+            setShouldShowPickColorButton(false);
             setNumberOfCurrentPlayer(-1);
             setResults(results_);
             let theMinScore=Math.min(...results_);
