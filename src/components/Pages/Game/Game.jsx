@@ -54,7 +54,6 @@ let Game=()=>{
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1],needToTransferSkip)){
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
-                if(pickedCard){}
                 if(pickedCard.type =="ordercolor"){
                     setShouldShowPickColorButton(true);
                     setPickedBlackCard(pickedCard);
@@ -136,7 +135,7 @@ let Game=()=>{
                 setTimeout(function(){
                     let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1],needToTransferSkip);
                     if(pickedCard !=false){
-                        if(pickedCard.type =="addfour"){
+                        if(pickedCard.type =="addfour" ){
                             let color=colorsArray[getRandomInt(colorsArray.length)];
                             pickedCard.color=color;
                         }

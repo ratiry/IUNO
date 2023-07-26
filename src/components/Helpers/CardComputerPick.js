@@ -9,7 +9,7 @@ let CardComputerPick=(myCards,lastCard,needToTransferSkip)=>{
             return myCards[i]
         }
     }
-    if(!IsProper){
+    if(!IsProper & !needToTransferSkip){
         for(let i=0;i<myCards.length;i++){
             if(myCards[i].type=="addfour"){
                 return myCards[i];
