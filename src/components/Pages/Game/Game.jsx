@@ -16,6 +16,7 @@ import puttingCardOnPlayfield from "../../Helpers/puttingCardOnPlayfield";
 import takingCardFromStack from "../../Helpers/takingCardFromStack";
 import shuffle from "../../Helpers/shuffle";
 import { URLs } from "../../../App";
+import PickColorButton from "./PickColorButton/PickColorButton";
 let Game=()=>{
     let location=useLocation();
     let navigate=useNavigate();
@@ -33,6 +34,8 @@ let Game=()=>{
     let [winner,setWinner] = useState(-1);
     let [needToTransferSkip,setNeedToTransferSkip]=useState(false);
     let [shouldShowSkipButton,SetShouldShowSkipButton]=useState(false);
+    let [shouldShowPickColorButton,setShouldShowPickColorButton]=useState(false);
+    let [pickedBlackCard,setPickedBlackCard] = useState({});
     window.results=results;
     window.cardsOfPlayers=cardsOfPlayers;
     window.stackOfCards= stackOfCards;
@@ -49,20 +52,34 @@ let Game=()=>{
     let moveOfRealPlayer=(pickedCard)=>{
         if(numberOfCurrentPlayer ==0 & !isTheEnd){
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1],needToTransferSkip)){
-                puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
-                if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
-                    setNeedToTransferSkip(true);
-                }
-                if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
-                    setIsTheEnd(true);
-                    setNumberOfCurrentPlayer(-1);
+                if(pickedCard.type=="addfour" || pickedCard.type =="ordercolor"){
+                    setShouldShowPickColorButton(true);
+                    setPickedBlackCard(pickedCard);
+                }else{
+                    setShouldShowPickColorButton(false);
+                    puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
+                    if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
+                        setNeedToTransferSkip(true);
+                    }
+                    if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
+                        setIsTheEnd(true);
+                        setNumberOfCurrentPlayer(-1);
+                    }
                 }
             }else{
                 // code about using blackCard, if others cards are not right
             }
         }
+    }
+    let pickColorButtonOnClick=(color)=>{
+        let pickedBlackCard_copy=pickedBlackCard;
+        pickedBlackCard_copy.color=color;
+        setPickedBlackCard({});
+        debugger;
+        setShouldShowPickColorButton(false);
+        puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedBlackCard_copy,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
     }
     let skipButtonOnClick=()=>{
         setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
@@ -93,6 +110,7 @@ let Game=()=>{
             setShouldShowPassButton(false);
             setShouldShowTakeCardButton(false);
             SetShouldShowSkipButton(false);
+            setShouldShowPickColorButton(false);
             if(needToTransferSkip){
                 setTimeout(function(){
                     let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1],needToTransferSkip);
@@ -207,7 +225,7 @@ let Game=()=>{
             <Player winner={winner} cards={cardsOfPlayers[3]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={4} quantityOfPlayers={quantityOfPlayers}/>
             <ButtonContainer>{shouldShowTakeCardButton? <ButtonWithText onClick={takeCardButtonOnClick}>Take card</ButtonWithText>: shouldShowPassButton ? <ButtonWithText onClick={passButtonOnClick}>Pass</ButtonWithText> : shouldShowSkipButton ? <ButtonWithText onClick={skipButtonOnClick}>Skip</ButtonWithText>:<></>}</ButtonContainer>
             <Player winner={winner} moveOfRealPlayer={moveOfRealPlayer} cards={cardsOfPlayers[0]} numberOfCurrentPlayer={numberOfCurrentPlayer} isRealPlayear={true} id={1} quantityOfPlayers={quantityOfPlayers}/>
-            <div>{winner!=-1  && <ButtonWithText onClick={resultsButtonOnClick}>Results</ButtonWithText>}</div>
+            <ButtonContainer>{winner!=-1  ? <ButtonWithText onClick={resultsButtonOnClick}>Results</ButtonWithText> : shouldShowPickColorButton ? <PickColorButton onClick={pickColorButtonOnClick}/>:<></>}</ButtonContainer>
         </div>
     )
 }
