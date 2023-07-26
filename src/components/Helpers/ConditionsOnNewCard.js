@@ -21,13 +21,10 @@ let ConditionsOnNewCard=(candidatCard,lastCard,needToTransferSkip)=>{
                 IsProper= true;
             }
         }
-        if(candidatCard.type=="ordercolor"){
+        if(candidatCard.type=="ordercolor" || candidatCard.type =="addfour"){
             IsProper=true;
         }
     }   
-    if(candidatCard.type=="addfour"){
-        IsProper=false;
-    }
     return IsProper;
 }
 export default ConditionsOnNewCard;

@@ -54,7 +54,7 @@ let Game=()=>{
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1],needToTransferSkip)){
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
-                if(pickedCard.type =="ordercolor"){
+                if(pickedCard.type =="ordercolor" || pickedCard.type =="addfour"){
                     setShouldShowPickColorButton(true);
                     setPickedBlackCard(pickedCard);
                 }else{
@@ -68,19 +68,6 @@ let Game=()=>{
                         setIsTheEnd(true);
                         setNumberOfCurrentPlayer(-1);
                     }
-                }
-            }else if(pickedCard.type=="addfour"){//bug
-                let IsAllowedToUseAddFour=true;
-                debugger;
-                for(let i=0;i<cardsOfPlayers[numberOfCurrentPlayer].length;i++){
-                    if(ConditionsOnNewCard(cardsOfPlayers[numberOfCurrentPlayer][i],usedCards[usedCards.length-1],needToTransferSkip)){
-                        IsAllowedToUseAddFour=false;
-                        
-                    }
-                }
-                if(IsAllowedToUseAddFour){
-                    setShouldShowPickColorButton(true);
-                    setPickedBlackCard(pickedCard);
                 }
             }
         }
