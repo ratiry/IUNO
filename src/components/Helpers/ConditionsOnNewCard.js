@@ -19,7 +19,10 @@ let ConditionsOnNewCard=(candidatCard,lastCard,needToTransferSkip)=>{
                 IsProper= true;
             }
         }
-    }    
+        if(candidatCard.type=="ordercolor"){
+            IsProper=true;
+        }
+    }   
     return IsProper;
 }
 export default ConditionsOnNewCard;

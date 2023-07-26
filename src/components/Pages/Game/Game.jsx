@@ -3,7 +3,7 @@ import classes from './Game.module.scss';
 import Player from "./Player/Player";
 import { useEffect ,useState} from "react";
 import preparationToTheGame from "../../Helpers/preparationToTheGame";
-import CardsData from "../../Helpers/Cards";
+import CardsData, { colorsArray } from "../../Helpers/Cards";
 import Dock from "./Dock/Dock";
 import getRandomInt from "../../Helpers/Random";
 import PlayField from "./Playfield/PlayField";
@@ -111,6 +111,10 @@ let Game=()=>{
                 setSecondAttemptToMoveComputer(false);
                     setTimeout(function() {
                         if(pickedCard !=false){
+                            if(pickedCard.type=="ordercolor" || pickedCard.type =="addfour"){
+                                let color=colorsArray[getRandomInt(colorsArray.length)];
+                                pickedCard.color=color;
+                            }
                             if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
                                 setNeedToTransferSkip(true);
                             }
@@ -137,6 +141,10 @@ let Game=()=>{
             let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
             setTimeout(function(){
                 if(pickedCard !=false){
+                    if(pickedCard.type=="ordercolor" || pickedCard.type =="addfour"){
+                        let color=colorsArray[getRandomInt(colorsArray.length)];
+                        pickedCard.color=color;
+                    }
                     puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                     if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
                         debugger;
@@ -151,7 +159,6 @@ let Game=()=>{
     useEffect(()=>{
         if(isTheEnd){
             let results_=[];
-            let winner_=[];
             for(let i=0;i<cardsOfPlayers.length;i++){
                 let summ=0;
                 if(cardsOfPlayers[i].length>0){

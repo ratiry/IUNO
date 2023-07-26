@@ -52,12 +52,12 @@ const CardsData=[
     {color:"red",type:"addtwo",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75084/red-draw-two-card-clipart-xl.png"},
     {color:"blue",type:"addtwo",value:20,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75058/blue-draw-two-card-clipart-md.png"},
 
-    // {color:"black",type:"orderColor", value:50,src:"https://daroolz.com/wp-content/uploads/2020/01/uno-wildcard-196x300.gif"}
+    {color:"black",type:"ordercolor", value:50,src:"https://daroolz.com/wp-content/uploads/2020/01/uno-wildcard-196x300.gif"}
 ]
 export const cardsBackSrc="https://opengameart.org/sites/default/files/UNO-Back_0.png";
 export const firstPlaceSrc="https://www.svgrepo.com/show/396189/1st-place-medal.svg";
 export const secondPlaceSrc="https://www.svgrepo.com/download/404693/2nd-place-medal.svg";
 export const thirdPlaceSrc="https://www.svgrepo.com/download/380528/medal-champion-award-winner-olympic-13.svg";
 export const fourthPlaceSrc="https://upload.wikimedia.org/wikipedia/commons/3/37/4th_place_icon.png";
-
+export const colorsArray=["red","blue","green","yellow"];
 export default CardsData;
