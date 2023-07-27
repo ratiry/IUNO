@@ -1,11 +1,5 @@
 .dock{
     display:flex;
-    position:relative;
-    & > div{
-        position: absolute;
-    }   
-    .ammountOfDockCards{
-        position:absolute;
-        left:20%;
-    }
+    position:relative;  
+
 }
