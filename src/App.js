@@ -4,6 +4,8 @@ import classes from  './App.module.scss';
 import Welcome from './components/Pages/Welcome/Welcome';
 import Game from './components/Pages/Game/Game';
 import Results from './components/Pages/Results/Results';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 export const URLs={
   welcome:'/',
   game:"/Game",
@@ -13,6 +15,7 @@ function App() {
 
   return (
     <div className={classes.App}>
+      <Header/>
       <BrowserRouter>
         <Routes>
           <Route path={URLs.welcome} element={<Welcome/>}></Route>
@@ -20,6 +23,7 @@ function App() {
           <Route path={URLs.results} element={<Results/>}></Route>          
         </Routes>
       </BrowserRouter>
+      <Footer/>
     </div>
   );
 }

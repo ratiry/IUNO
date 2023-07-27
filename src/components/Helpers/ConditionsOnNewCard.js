@@ -3,6 +3,7 @@ let ConditionsOnNewCard=(candidatCard,lastCard,needToTransferSkip)=>{
     let IsProper=false;
     if(needToTransferSkip){
         if(candidatCard.type ==lastCard.type){
+            debugger;
             IsProper=true;
         }else if(lastCard.type=="addfour" &  candidatCard.type=="addtwo" & candidatCard.color ==lastCard.color){
             IsProper=true;

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { URLs } from "../../../App";
 import {ButtonWithText} from "./../../Common/Buttons/Buttons.jsx";
 import P from "../../Common/Typography/P/P";
+import H from "../../Common/Typography/Headlines/H";
 let Welcome=(props)=>{
     let navigate=useNavigate();
     let ComputerPlayers=[];
@@ -31,9 +32,8 @@ let Welcome=(props)=>{
   
     return(
         <div className={classes.Welcome}>
-            <h1>Uno Game</h1>
+            <H bouldness={1}>Uno game</H>
             <form  onSubmit={handleSubmit(onSubmit) }>
-
                 <div className={classes.Item}>
                     <P>How many players</P>
                     <select  name="ammountOfPlayers" {...register('ammountOfPlayers')}>

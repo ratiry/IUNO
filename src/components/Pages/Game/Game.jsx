@@ -135,6 +135,9 @@ let Game=()=>{
                         if(usedCards[usedCards.length-1].type=="addfour"){
                             takingCardFromStack(stackOfCards,cardsOfPlayers,numberOfCurrentPlayer,setCardsOfPlayers,setStackOfCards,4);
                         }
+                        if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
+                            setIsTheEnd(true);
+                        }
                     }
                     setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
                 },1.5*1000)
@@ -172,7 +175,7 @@ let Game=()=>{
         if(secondAttemptToMoveComputer){
             let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
             setTimeout(function(){
-                if(pickedCard !=false){
+                if(pickedCard !=false & !needToTransferSkip){
                     if(pickedCard.type=="ordercolor" || pickedCard.type =="addfour"){
                         let color=colorsArray[getRandomInt(colorsArray.length)];
                         pickedCard.color=color;
