@@ -54,7 +54,7 @@ let Game=()=>{
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1],needToTransferSkip)){
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
-                if(pickedCard.type =="ordercolor" || pickedCard.type =="addfour"){
+                if(pickedCard.color=="black"){
                     setShouldShowPickColorButton(true);
                     setPickedBlackCard(pickedCard);
                 }else{
@@ -127,6 +127,9 @@ let Game=()=>{
                             pickedCard.color=color;
                         }
                         puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
+                        if(cardsOfPlayers[numberOfCurrentPlayer].length==0){
+                            setIsTheEnd(true);
+                        }
                     }else{
                         setNeedToTransferSkip(false);
                         if(usedCards[usedCards.length-1].type=="addtwo"){
@@ -146,7 +149,7 @@ let Game=()=>{
                 setSecondAttemptToMoveComputer(false);
                     setTimeout(function() {
                         if(pickedCard !=false){
-                            if(pickedCard.type=="ordercolor" || pickedCard.type =="addfour"){
+                            if(pickedCard.color=="black"){
                                 let color=colorsArray[getRandomInt(colorsArray.length)];
                                 pickedCard.color=color;
                             }
@@ -175,8 +178,8 @@ let Game=()=>{
         if(secondAttemptToMoveComputer){
             let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
             setTimeout(function(){
-                if(pickedCard !=false & !needToTransferSkip){
-                    if(pickedCard.type=="ordercolor" || pickedCard.type =="addfour"){
+                if(pickedCard !=false & !needToTransferSkip){//quastion & !needToTransferSkip
+                    if(pickedCard.color=="black"){
                         let color=colorsArray[getRandomInt(colorsArray.length)];
                         pickedCard.color=color;
                     }
