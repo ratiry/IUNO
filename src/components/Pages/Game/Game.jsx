@@ -172,7 +172,19 @@ let Game=()=>{
                             if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
                                 setNeedToTransferSkip(true);
                             }
-                            puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
+                            if(pickedCard.type=="swap"){
+                                let opponents=[];
+                                for(let i=0;i<quantityOfPlayers;i++){
+                                    if(i != numberOfCurrentPlayer){
+                                        opponents.push(i);
+                                    }
+                                }
+                                let idOfOpponent = opponents[Math.floor(Math.random()*opponents.length)];
+                                puttingCardOnPlayfieldWithSwap(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse,idOfOpponent);
+
+                            }else{
+                                puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
+                            }
                             if(cardsOfPlayers[numberOfCurrentPlayer].length===0){
                                 setIsTheEnd(true);
                             }
