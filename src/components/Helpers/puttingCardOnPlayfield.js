@@ -3,7 +3,6 @@ import determineNumberOfCurrentPlayer from "./determineNumberOfCurrentPlayer";
 let puttingCardOnPlayfield=(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse)=>{
     let cardsOfPlayers_copy=[...cardsOfPlayers];
     let cardsOfCurrentPlayer=cardsOfPlayers[numberOfCurrentPlayer];
-    let IsReverse_copy=isReverse;
     for(let i=0;i<cardsOfCurrentPlayer.length;i++){
         if(cardsOfCurrentPlayer[i].src ==pickedCard.src){
             cardsOfCurrentPlayer.splice(i,1);

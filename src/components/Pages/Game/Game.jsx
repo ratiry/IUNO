@@ -170,6 +170,7 @@ let Game=()=>{
                             if(pickedCard.color=="black"){
                                 let color=colorsArray[getRandomInt(colorsArray.length)];
                                 pickedCard.color=color;
+                                debugger;
                             }
                             if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
                                 setNeedToTransferSkip(true);

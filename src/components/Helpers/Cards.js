@@ -54,6 +54,7 @@ const CardsData=[
 
     {color:"black",type:"ordercolor", value:50,src:"https://daroolz.com/wp-content/uploads/2020/01/uno-wildcard-196x300.gif"},
     {color:"black",type:"addfour",value:50,src:"https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/75099/wild-draw-four-card-clipart-xl.png"},
+    {color:"black",type:"swap",value:50,src:"https://www.ultraboardgames.com/uno/gfx/chicago7.jpg"},
 ]
 export const cardsBackSrc="https://opengameart.org/sites/default/files/UNO-Back_0.png";
 export const firstPlaceSrc="https://www.svgrepo.com/show/396189/1st-place-medal.svg";
