@@ -76,6 +76,7 @@ let Game=()=>{
         }
     }
     let pickColorButtonOnClick=(color)=>{
+        setShouldShowPickOpponentToSwapButton(false);
         let pickedBlackCard_copy=pickedBlackCard;
         pickedBlackCard_copy.color=color;
         if(pickedBlackCard_copy.type=="addfour"){
@@ -94,7 +95,8 @@ let Game=()=>{
         setShouldShowPickColorButton(false);
     }
     let PickOpponentToSwapButtonOnClick=(id)=>{
-        puttingCardOnPlayfieldWithSwap(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedBlackCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse,id);
+        setShouldShowPickColorButton(false);
+        puttingCardOnPlayfieldWithSwap(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedBlackCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse,id,setIsTheEnd);
         setPickedBlackCard({});
         if(cardsOfPlayers[numberOfCurrentPlayer].length==0){
             setIsTheEnd(true);
@@ -180,7 +182,7 @@ let Game=()=>{
                                     }
                                 }
                                 let idOfOpponent = opponents[Math.floor(Math.random()*opponents.length)];
-                                puttingCardOnPlayfieldWithSwap(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse,idOfOpponent);
+                                puttingCardOnPlayfieldWithSwap(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse,idOfOpponent,setIsTheEnd);
 
                             }else{
                                 puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
