@@ -22,7 +22,7 @@ let ConditionsOnNewCard=(candidatCard,lastCard,needToTransferSkip)=>{
                 IsProper= true;
             }
         }
-        if(candidatCard.color=="black"){
+        if(candidatCard.type=="ordercolor" || candidatCard.type=="addfour" || candidatCard.type=="swap"){
             IsProper=true;
             debugger;
         }

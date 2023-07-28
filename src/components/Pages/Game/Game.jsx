@@ -57,7 +57,7 @@ let Game=()=>{
             if(ConditionsOnNewCard(pickedCard,usedCards[usedCards.length-1],needToTransferSkip)){
                 setShouldShowTakeCardButton(false);
                 setShouldShowPassButton(false);
-                if(pickedCard.color=="black"){
+                if(pickedCard.type=="ordercolor" || pickedCard.type=="addfour" || pickedCard.type=="swap"){
                     setShouldShowPickColorButton(true);
                     setPickedBlackCard(pickedCard);
 
@@ -167,10 +167,9 @@ let Game=()=>{
                 setSecondAttemptToMoveComputer(false);
                     setTimeout(function() {
                         if(pickedCard !=false){
-                            if(pickedCard.color=="black"){
+                            if(pickedCard.type=="ordercolor" || pickedCard.type=="addfour" || pickedCard.type=="swap"){
                                 let color=colorsArray[getRandomInt(colorsArray.length)];
                                 pickedCard.color=color;
-                                debugger;
                             }
                             if(pickedCard.type=="addtwo" || pickedCard.type=="addfour" || pickedCard.type=="skip"){
                                 setNeedToTransferSkip(true);
@@ -210,7 +209,7 @@ let Game=()=>{
             let pickedCard= CardComputerPick(cardsOfPlayers[numberOfCurrentPlayer],usedCards[usedCards.length-1]);
             setTimeout(function(){
                 if(pickedCard !=false & !needToTransferSkip){//quastion & !needToTransferSkip
-                    if(pickedCard.color=="black"){
+                    if(pickedCard.type=="ordercolor" || pickedCard.type=="addfour" || pickedCard.type=="swap"){
                         let color=colorsArray[getRandomInt(colorsArray.length)];
                         pickedCard.color=color;
                     }
