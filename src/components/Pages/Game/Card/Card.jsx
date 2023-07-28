@@ -16,7 +16,7 @@ let Card=(props)=>{
         case "dock":
             return <div className={classes.playfieldCardCardContainer}><img className={classes.Card + " " + classes.backCard} src={cardsBackSrc} alt={"dock card"} /></div> 
         case "playfield":
-            return <div className={classes.playfieldCardCardContainer}><img className={classes.Card + " " + classes.playfieldCard} src={props.src} alt={props.color + " " + props.value}  />{(props.type =="addfour" || props.type=="ordercolor") && <div style={{background:props.color}} className={classes.colorShadow}></div>} </div>
+            return <div className={classes.playfieldCardCardContainer}><img className={classes.Card + " " + classes.playfieldCard} src={props.src} alt={props.color + " " + props.value}  />{(props.type =="addfour" || props.type=="ordercolor" || props.type=="swap") && <div style={{background:props.color}} className={classes.colorShadow}></div>} </div>
         default:
             return <div className={classes.playfieldCardCardContainer}><img className={classes.Card} src={props.src} alt={props.color + " " + props.value} /></div> 
     }

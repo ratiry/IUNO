@@ -17,6 +17,8 @@ import takingCardFromStack from "../../Helpers/takingCardFromStack";
 import shuffle from "../../Helpers/shuffle";
 import { URLs } from "../../../App";
 import PickColorButton from "./PickColorButton/PickColorButton";
+import PickOpponentToSwapButton from "./PickOpponentToSwapButton/PickOpponentToSwapButton";
+import puttingCardOnPlayfieldWithSwap from "../../Helpers/puttingCardOnPlayfieldWithSwap";
 let Game=()=>{
     let location=useLocation();
     let navigate=useNavigate();
@@ -35,6 +37,7 @@ let Game=()=>{
     let [needToTransferSkip,setNeedToTransferSkip]=useState(false);
     let [shouldShowSkipButton,SetShouldShowSkipButton]=useState(false);
     let [shouldShowPickColorButton,setShouldShowPickColorButton]=useState(false);
+    let [shouldShowPickOpponentToSwapButton,setShouldShowPickOpponentToSwapButton]=useState(false);
     let [pickedBlackCard,setPickedBlackCard] = useState({});
     window.results=results;
     window.cardsOfPlayers=cardsOfPlayers;
@@ -57,9 +60,9 @@ let Game=()=>{
                 if(pickedCard.color=="black"){
                     setShouldShowPickColorButton(true);
                     setPickedBlackCard(pickedCard);
+
                 }else{
                     setShouldShowPickColorButton(false);
-                    debugger;
                     puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
                     if(pickedCard.type=="addtwo" ||  pickedCard.type=="skip"){
                         setNeedToTransferSkip(true);
@@ -75,15 +78,28 @@ let Game=()=>{
     let pickColorButtonOnClick=(color)=>{
         let pickedBlackCard_copy=pickedBlackCard;
         pickedBlackCard_copy.color=color;
-        setPickedBlackCard({});
         if(pickedBlackCard_copy.type=="addfour"){
             setNeedToTransferSkip(true);
         }
+        if(pickedBlackCard_copy.type=="swap"){
+            setShouldShowPickOpponentToSwapButton(true);
+            setPickedBlackCard(pickedBlackCard_copy);
+        }else{
+            setPickedBlackCard({});
+            puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedBlackCard_copy,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
+            if(cardsOfPlayers[numberOfCurrentPlayer].length==0){
+                setIsTheEnd(true);
+            }
+        }
         setShouldShowPickColorButton(false);
-        puttingCardOnPlayfield(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedBlackCard_copy,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse);
+    }
+    let PickOpponentToSwapButtonOnClick=(id)=>{
+        puttingCardOnPlayfieldWithSwap(usedCards,cardsOfPlayers,numberOfCurrentPlayer,pickedBlackCard,isReverse,quantityOfPlayers,setCardsOfPlayers,setUsedCards,setNumberOfCurrentPlayer,setIsReverse,id);
+        setPickedBlackCard({});
         if(cardsOfPlayers[numberOfCurrentPlayer].length==0){
             setIsTheEnd(true);
         }
+        setShouldShowPickOpponentToSwapButton(false);
     }
     let skipButtonOnClick=()=>{
         setNumberOfCurrentPlayer(determineNumberOfCurrentPlayer(isReverse,numberOfCurrentPlayer,quantityOfPlayers));
@@ -247,7 +263,7 @@ let Game=()=>{
             <Player winner={winner} cards={cardsOfPlayers[3]} numberOfCurrentPlayer={numberOfCurrentPlayer} id={4} quantityOfPlayers={quantityOfPlayers}/>
             <ButtonContainer>{shouldShowTakeCardButton? <ButtonWithText onClick={takeCardButtonOnClick}>Take card</ButtonWithText>: shouldShowPassButton ? <ButtonWithText onClick={passButtonOnClick}>Pass</ButtonWithText> : shouldShowSkipButton ? <ButtonWithText onClick={skipButtonOnClick}>Skip</ButtonWithText>:<></>}</ButtonContainer>
             <Player winner={winner} moveOfRealPlayer={moveOfRealPlayer} cards={cardsOfPlayers[0]} numberOfCurrentPlayer={numberOfCurrentPlayer} isRealPlayear={true} id={1} quantityOfPlayers={quantityOfPlayers}/>
-            <ButtonContainer>{winner!=-1  ? <ButtonWithText onClick={resultsButtonOnClick}>Results</ButtonWithText> : shouldShowPickColorButton ? <PickColorButton onClick={pickColorButtonOnClick}/>:<></>}</ButtonContainer>
+            <ButtonContainer>{winner!=-1  ? <ButtonWithText onClick={resultsButtonOnClick}>Results</ButtonWithText> : shouldShowPickColorButton ? <PickColorButton onClick={pickColorButtonOnClick}/>:shouldShowPickOpponentToSwapButton ? <PickOpponentToSwapButton onClick={PickOpponentToSwapButtonOnClick} quantityOfPlayers={quantityOfPlayers}/>:<></>}</ButtonContainer>
         </div>
     )
 }

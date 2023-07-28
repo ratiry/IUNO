@@ -10,6 +10,8 @@ let Player=(props)=>{
                 {props.cards && props.cards.map((card)=><Card moveOfRealPlayer={props.moveOfRealPlayer} position={"realPlayers"} src={card.src} color={card.color} value={card.value} type={card.type}/>)}
                 {props.numberOfCurrentPlayer ==props.id-1 && <div className={classes.alertOfMove}><P>  it's your move now </P></div>}
                 {props.winner ==props.id-1 && <div className={classes.alertOfMove}><P>you win</P></div>}
+                <div className={classes.playersId}><P>{props.id}</P></div>
+
             </div>
             )
         }
@@ -18,6 +20,7 @@ let Player=(props)=>{
                 {props.cards && props.cards.map((card)=><Card  src={card.src} color={card.color} value={card.value} type={card.type}/>)}
                 {props.numberOfCurrentPlayer ==props.id-1 && <div className={classes.alertOfMove}><P>moves</P></div>}
                 {props.winner ==props.id-1 && <div className={classes.alertOfMove}><P>won</P></div>}
+                <div className={classes.playersId}><P>{props.id}</P></div>
             </div>
         )
     }else{
